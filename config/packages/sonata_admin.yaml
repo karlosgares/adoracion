@@ -1,0 +1,46 @@
+sonata_admin:
+    title: 'Adoración Bilbao'
+    options:
+        title_mode: 'single_text'
+    search: false
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+            Adoradores:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-user"></i>'
+                item: admin.adorador
+
+            Confesores:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-user-circle"></i>'
+                item: admin.sacerdote
+
+            Calendarios:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-calendar"></i>'
+                items:
+                        - admin.calendario_adoracion
+
+
+    templates:
+        layout: standard_layout.html.twig
+
+    assets:
+        # stylesheet paths to add to the page in addition to the list above
+        extra_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-blue.min.css']
+
+        # stylesheet paths to remove from the page
+        remove_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css']
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

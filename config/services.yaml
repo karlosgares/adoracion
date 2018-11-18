@@ -29,3 +29,31 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    # admin
+    admin.sacerdote:
+        class: App\Admin\SacerdoteAdmin
+        arguments: [~, App\Entity\Sacerdote, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Sacerdotes }
+        public: true
+
+    admin.adorador:
+        class: App\Admin\AdoradorAdmin
+        arguments: [~, App\Entity\Adorador, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Adoradores }
+        public: true
+
+    admin.diasemana_hora:
+        class: App\Admin\DiasemanaHoraAdmin
+        arguments: [~, App\Entity\DiasemanaHora, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DiasemanaHora }
+        public: false
+
+    admin.calendario_adoracion:
+        class: App\Admin\CalendarioAdoracionAdmin
+        arguments: [~, ~, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Calendarios , label: Adoración }
+        public: false
