@@ -11,23 +11,44 @@ sonata_admin:
                 on-top: true
                 label: ~
                 label_catalogue: ~
-                icon: '<i class="fa fa-user"></i>'
+                icon: '<i class="fa fa-circle-o"></i>'
                 item: admin.adorador
 
             Confesores:
                 on-top: true
                 label: ~
                 label_catalogue: ~
-                icon: '<i class="fa fa-user-circle"></i>'
+                icon: '<i class="fa fa-circle-o"></i>'
                 item: admin.sacerdote
 
             Calendarios:
                 on-top: true
                 label: ~
                 label_catalogue: ~
-                icon: '<i class="fa fa-calendar"></i>'
+                icon: '<i class="fa fa-circle-o"></i>'
                 items:
                         - admin.calendario_adoracion
+            
+            Peticiones del obispo:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-circle-o"></i>'
+                item:   admin.obispo
+
+            Peticiones personales:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-circle-o"></i>'
+                item:   admin.peticion
+
+            Acción de gracias:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-circle-o"></i>'
+                item:   admin.gracias
 
 
     templates:
@@ -35,11 +56,13 @@ sonata_admin:
 
     assets:
         # stylesheet paths to add to the page in addition to the list above
-        extra_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-blue.min.css']
+        extra_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-blue.min.css','bundles/app/css/fullcalendar.min.css']
 
         # stylesheet paths to remove from the page
         remove_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css']
-
+        
+        # javascript paths to add to the page in addition to the list above
+        extra_javascripts: ['bundles/app/js/fullcalendar.min.js']
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:

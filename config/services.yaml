@@ -57,3 +57,25 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Calendarios , label: Adoración }
         public: false
+
+    admin.obispo:
+        class: App\Admin\ObispoAdmin
+        arguments: [~, App\Entity\Nota, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: 'Peticiones del obispo' }
+        public: true
+
+    admin.peticion:
+        class: App\Admin\PeticionAdmin
+        arguments: [~, App\Entity\Nota, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: 'Peticiones particulaes' }
+        public: true
+
+    
+    admin.gracias:
+        class: App\Admin\GraciasAdmin
+        arguments: [~, App\Entity\Nota, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: 'Acción de gracias' }
+        public: true

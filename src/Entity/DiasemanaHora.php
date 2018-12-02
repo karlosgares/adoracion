@@ -19,11 +19,6 @@ class DiasemanaHora
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $diasemana;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $dayofweek;
@@ -43,9 +38,20 @@ class DiasemanaHora
     private $adoradores;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
+     */
+    private $tipo;
+
+    /**
+     * @ORM\Column(type="datetime")
      */
     private $hora;
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fin;
 
     public function __construct()
     {
@@ -60,18 +66,6 @@ class DiasemanaHora
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDiasemana(): ?string
-    {
-        return $this->diasemana;
-    }
-
-    public function setDiasemana(string $diasemana): self
-    {
-        $this->diasemana = $diasemana;
-
-        return $this;
     }
 
     public function getDayofweek(): ?int
@@ -94,6 +88,18 @@ class DiasemanaHora
     public function setHora(\DateTimeInterface $hora): self
     {
         $this->hora = $hora;
+
+        return $this;
+    }
+
+    public function getFin(): ?\DateTimeInterface
+    {
+        return $this->fin;
+    }
+
+    public function setFin(\DateTimeInterface $fin): self
+    {
+        $this->fin = $fin;
 
         return $this;
     }
@@ -153,4 +159,17 @@ class DiasemanaHora
 
         return $this;
     }
+
+    public function getTipo(): ?int
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(int $tipo): self
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+    public function getColor() { return 'silver'; }
 }

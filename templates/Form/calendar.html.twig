@@ -1,4 +1,73 @@
-{# templates/form/fields.html.twig #}
-{% block shipping_widget %}
-   KARLOS
+{% block calendar_widget %}
+   <div id="calendar"></div>
+
+
+<script>
+$(function() {
+
+
+  // page is now ready, initialize the calendar..
+  var data =  dataFromForm();
+  $('#calendar').fullCalendar({
+	header: {
+	    left: '<<',
+	    center: 'title',
+	    right: 'prev,next'
+	},
+    eventSources: [
+	    // your event source
+	    {
+	      url: '{{ path('app_ajax_getdiasemanahoras') }}', // use the `url` property
+	      type: 'POST',
+	      data: {
+	        id: data['id'],
+	        tipo: data['className']
+	      },
+	      color: '{{ sonata_admin.admin.getColor() }};',    // an option!
+	      textColor: 'black',  // an option!
+	      error: function() {
+        	alert('there was an error while fetching events!');
+      	   },
+	    }
+
+	    // any other sources...
+
+	  ],
+   defaultView: 'agendaWeek',
+   weekends: true,
+   locale: 'es',
+   slotDuration: '01:00:00',
+   allDaySlot:false,
+   selectable: true,
+   editable: true,
+   slotLabelFormat:'H:mm',                              
+   select:function(start, end){
+    	var uniqid = data['uniqid'];
+   		var tipohora = {{ sonata_admin.admin.getTipo() }};
+    	$.ajax({
+			  url: "/ajax/savediasemanahora",
+			  data: {'tipohora': tipohora, 'id': data['id'], 'start': start._i, 'end': end._i, 'className': data['className']},
+			  method: 'POST'
+			}).done(function(res) { 
+			 	var event = {'start': res.start, 'end': res.end, 'title': res.title,   backgroundColor: '{{ sonata_admin.admin.getColor() }}' };
+		         $('#calendar').fullCalendar( 'renderEvent', event);
+		         $('#calendar').fullCalendar( 'rerenderEvents' )
+			}
+		);
+    },
+  })
+});
+
+
+function dataFromForm() {
+	var ret = [];
+	var action = $('form').attr('action');
+	var arr = action.split('/');
+	var get = arr[arr.length-1].split("uniqid=");
+	ret['uniqid'] = get[1];
+	ret['id'] = arr[arr.length-2]
+	ret['className'] = arr[arr.length-3]
+	return ret;
+}
+</script>
 {% endblock %}

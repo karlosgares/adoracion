@@ -39,6 +39,11 @@ class Adorador
     private $telefono;
 
     /**
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    private $sustitucionfranja;
+
+    /**
      * @ORM\ManyToMany(targetEntity="DiasemanaHora", inversedBy="adoradores")
      */
     private $diasemanahoras;
@@ -129,5 +134,24 @@ class Adorador
         }
 
         return $this;
+    }
+
+    public function getColor() { return 'gold'; }
+
+    public function getSustitucionfranja(): ?int
+    {
+        return $this->sustitucionfranja;
+    }
+
+    public function setSustitucionfranja(?int $sustitucionfranja): self
+    {
+        $this->sustitucionfranja = $sustitucionfranja;
+
+        return $this;
+    }
+
+    public static function getSustitucionfranjas() {
+
+        return ['0:00-6:00 Madrugada','6:00-12:00 Mañana','12:00-18:00 Tarde', '18:00-24:00 Noche'];
     }
 }
