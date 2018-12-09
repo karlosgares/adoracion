@@ -9,6 +9,4 @@ class AdoradorAdmin extends UsuarioAdmin
     protected $baseRoutePattern = 'adorador';
 
 	public function getTipo() { return 1;}
-
-	public function getColor() {return "green";}
 }

@@ -1,72 +1,120 @@
-<!doctype html>
-<html lang="es">
-<head>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="{{ asset('bundles/app/css/web.css') }}">
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="{{ asset('bundles/app/js/web.js') }}"></script>
-
-<title>Adoración Perpetua BILBAO</title>
-</head>
-<body>
-	<header>
-		<div class="container-fluid">
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>		<a class="navbar-brand" href="#" style="display:none;"><h2>APBilbao</h2></a>
-					
-  				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-	  				<ul class="navbar-nav mr-auto sf-menu">
-						<li  class="current"><a href="javascript:goto('home');">Inicio</a></li>
-						<li><a href="javascript:goto('obispo');">D. Marío</a></li>
-						<li><a href="javascript:goto('noticias');">Noticias</a></li>
-						<li><a href="javascript:goto('peticion');">Pedimos</a></li>
-						<li><a href="javascript:goto('gracias');">Damos gracias</a></li>
-						<li><a href="javascript:goto('adorador');">Adoradores</a></li>
-					</ul>
-				</div>
-				<div class="pull-right">Adoración perpetua. 24h 365 días al año</div>
-			</nav>
-		</div>
-	</header>
+{% include 'web/header.html.twig' %}	
 	<div class="clear"></div>
 	<div class="bg1">
-		<div class="container">
-			<section id="section-home" class="section">
-			<br />
-			HOME
+		<div class="container-fluid">
+			<section id="section-home" class="section" data-loaded="0">
+			<h3>Inicio</h3>
+			<div class="row">
+				<div class="col-xs-12 col-md-6">
+					<div class="card">
+					  <div class="card-header">
+					    ADORACIÓN EUCARÍSTICA PERPETUA
+					  </div>
+					  <div class="card-body">
+					    <h6>El Señor te espera...</h6>
+					    <span class="home-text">...24 horas al día</span><br />
+					    <span class="home-text">...365 días al año</span><br />
+					    <span class="home-text">Abierta paro todos los que lo deseen.</span><br />
+					    <span class="home-text">Si quieres apuntarte...</span><br />
+					    <span class="home-text"><i class='fa fa-phone'></i> Llamanos al 606 770 181</span><br />
+					    <span class="home-text"><i class='fa fa-email'></i> Escríbenos a adoracionperpetua.bilbao@gmail.com</span>
+					    </span>
+ 	 				  </div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-6">
+					<div class="card">
+						<div class="card-header">
+						    INTENCIONES {{ mes }} de DON MARÍO ICETA
+					  	</div>
+					  	<div class="card-body">
+					    	<ol id="lista-nota-1"></ol>
+					  	</div>
+				  	</div>
+				</div>
+			</div>
+			<div class="row"><div style="height:30px"></div></div>
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					<div class="card">
+						<div class="card-header">
+						    Confesiones
+					  	</div>
+					  	<div class="card-body">
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar') } %}
+						{% include 'Web/calendar.html.twig' with vars %}
+					  	</div>
+					</div> 
+				</div>
+			</div>	
 			</section>
-			<section id="section-obispo" class="section" style="display:none;">
-			Obispo
+			
+			<section id="section-noticias" class="section" data-loaded="0" style="display:none;">
+				<h3>Noticias</h3>
+				<div class="card">
+				<div class="card-body">
+				<ul class="list-group" id="list-noticias">
+				  
+				</ul>
+				</div></div>
 			</section>
-			<section id="section-noticias" class="section" style="display:none;">
-			noticias
+			
+			<section id="section-gracias" class="section" data-loaded="0" style="display:none;">
+				<h3>Intenciones personales y acciones de gracias</h3>
+				<div class="row">
+					<div class="col-xs-12 col-md-6">
+						<div class="card">
+						  <div class="card-header">
+						    Intenciones
+						  </div>
+						  <div class="card-body">
+							<ul id="lista-nota-2"></ul>
+						  </div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6">
+						<div class="card">
+							  <div class="card-header">
+							    Gracias
+							  </div>
+							  <div class="card-body">
+									<ul id="lista-nota-3"></ul>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
-			<section id="section-peticion" class="section" style="display:none;">
-			Peticiones
-			</section>
-			<section id="section-gracias" class="section" style="display:none;">
-			gracias
-			</section>
-			<section id="section-adorador" class="section" style="display:none;">
-			Adoradores
+			<section id="section-adorador" class="section" data-loaded="1" style="display:none;">
+			{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar') } %}
+				<br />
+				<h3>Adoradores</h3>
+				{% include 'Web/calendar.html.twig' with vars %}
 			</section>
 		</div>
 	</div>
-	<div class="container-fluid">
-		<footer>
-			<div class="row">
-			<div class="col-xs-12 col-md-9"><br />
-				<p><center>Adoración Perpetua Bilbao @2018</center></p>
-			</div>
-			<div class="col-xs-12 col-md-3 text-center">Parroquia de Nuestra Señora del Carmen. <br />Calle Simón Bolívar, 4<br /> CP 48010 Bilbao</div>
-		</footer>
-	</div>
-</body>
-</html>
+{% include 'web/footer.html.twig' %}
+{% block end_javascript %}
+<script>
+$(function() {
+	$.ajax({
+		  url: "{{ path('web_load_notas') }}",
+		  method: 'GET'
+		}).done(function(res) { 
+		 	for(index in res) {
+		 		$('#lista-nota-' + index).html(res[index])
+		 	}
+		}
+	);
+
+	$.ajax({
+		  url: "{{ path('web_load_noticias') }}",
+		  method: 'GET'
+		}).done(function(res) { 
+		 	$('#list-noticias').html(res['noticias'])
+		}
+	);	
+
+});
+</script>
+{% endblock %}

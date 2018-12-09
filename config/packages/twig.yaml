@@ -4,4 +4,6 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'form/calendar.html.twig'
+        - 'form/image.html.twig'
         - '@SonataCore/Form/datepicker.html.twig'
+        - 'crud/base_noticia.html.twig'

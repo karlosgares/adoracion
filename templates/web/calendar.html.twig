@@ -1,0 +1,42 @@
+<div id="{{ calendar }}"></div>
+<script>
+$(function() {
+
+
+  // page is now ready, initialize the ..
+  $('#{{ calendar }}').fullCalendar({
+	header: {
+	    left: '',
+	    center: 'title',
+	    right: ''
+	},
+    eventSources: [
+	    // your event source
+	    {
+	      url: '{{ url }}', // use the `url` property
+	      type: 'POST',
+	      data: {
+	        tipo: '{{ tipo }}'
+	      },
+	      textColor: 'black',  // an option!
+	      error: function() {
+        	alert('there was an error while fetching events!');
+      	   },
+	    }
+
+	    // any other sources...
+
+	  ],
+   defaultView: 'agendaWeek',
+   weekends: true,
+   locale: 'es',
+   slotDuration: '01:00:00',
+   allDaySlot:false,
+   selectable: false,
+   editable: false,
+   slotLabelFormat:'H:mm',
+   slotLabelInterval: false
+  })
+});
+
+</script>

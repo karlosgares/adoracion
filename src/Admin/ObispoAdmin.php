@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
+
 final class ObispoAdmin extends NotaAdmin
 {
     protected $baseRouteName = 'obispo';

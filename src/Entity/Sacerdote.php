@@ -131,4 +131,6 @@ class Sacerdote
 
         return $this;
     }
+
+    public function getColor() { return 'green'; }
 }

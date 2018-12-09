@@ -31,7 +31,7 @@ class AjaxController extends AbstractController
 			$start->add( new \DateInterval('P1D'));
 			$bSeguir = (!array_key_exists($start->format("w"), $arrW));
 		}
-    	//\TODO recibir el lunes y ver que es lo que pasa
+    	
         foreach ($entity->getDiasemanahoras() as $dia) {
             $title = '';
             $start = clone $arrW[$dia->getHora()->format("w")];	

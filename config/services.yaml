@@ -69,7 +69,7 @@ services:
         class: App\Admin\PeticionAdmin
         arguments: [~, App\Entity\Nota, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: 'Peticiones particulaes' }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: 'Peticiones particulares' }
         public: true
 
     
@@ -78,4 +78,11 @@ services:
         arguments: [~, App\Entity\Nota, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: 'Acción de gracias' }
+        public: true
+
+    admin.noticia:
+        class: App\Admin\NoticiaAdmin
+        arguments: [~, App\Entity\Noticia, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: 'Noticias' }
         public: true

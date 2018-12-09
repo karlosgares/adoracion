@@ -1,0 +1,24 @@
+<div class='row'><div class="col-xs-12">
+<h4>{{ object.titulo }}</h4>
+</div></div>
+<div class='row'><div class="col-xs-12">
+{% if object.posicion == 0 %}
+<p>{{ object.contenido|nl2br }}
+ <img src="/noticias/{{ object.foto }}" class="img-fluid" alt="" align="right"  style="padding: 5px"></p>
+{% elseif object.posicion == 1 %}
+ <p>{{ object.contenido|nl2br }}
+ <img src="/noticias/{{ object.foto }}" class="img-fluid" alt="" align="left" style="padding: 5px"></p>
+{% elseif object.posicion == 2 %}
+	<p>{{ object.contenido|nl2br }}</p>
+	{% if object.foto != '' %}
+   <center><img src="/noticias/{{ object.foto }}" class="img-fluid" alt="" style="padding: 5px"></center>
+   {% endif %}
+{% elseif object.posicion == 3 %}
+	{% if object.foto != '' %}
+   <center><img src="/noticias/{{ object.foto }}" class="img-fluid" alt="" style="padding: 5px"></center>
+   {% endif %}
+   <p>{{ object.contenido|nl2br }}</p>
+{% else %}
+<p>{{ object.contenido|nl2br }}</p>
+{% endif %}
+</div></div>

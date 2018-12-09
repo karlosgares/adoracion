@@ -50,9 +50,17 @@ sonata_admin:
                 icon: '<i class="fa fa-circle-o"></i>'
                 item:   admin.gracias
 
+            Noticias:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-circle-o"></i>'
+                item:   admin.noticia
+
 
     templates:
         layout: standard_layout.html.twig
+        show: 'crud/show_noticia.html.twig'
 
     assets:
         # stylesheet paths to add to the page in addition to the list above

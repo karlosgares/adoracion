@@ -9,18 +9,12 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Form\Type\DatePickerType;
 
 abstract class NotaAdmin extends AbstractAdmin
 {
     public function toString($entity) {
-        return "Acción de gracias";
-    }
-
-    // in your ProductAdmin class
-    public function configure()
-    {
-        parent::configure();
-        $this->classnameLabel = "Accion de gracias";
+        return "Nota";
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -60,7 +54,14 @@ abstract class NotaAdmin extends AbstractAdmin
         }
 
         $formMapper
-            ->add('fecha')
+            ->add('fecha', DatePickerType::class, [
+                    'dp_side_by_side'       => true,
+                    'dp_use_current'        => false,
+                    'dp_collapse'           => true,
+                    'dp_calendar_weeks'     => false,
+                    'dp_view_mode'          => 'days',
+                    'dp_min_view_mode'      => 'days',
+            ])
             ->add('tipo', HiddenType::class, ['data'=> $this->getTipo()])
             ->add('texto')
             ->add('valida')
