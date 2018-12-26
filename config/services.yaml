@@ -53,10 +53,17 @@ services:
 
     admin.calendario_adoracion:
         class: App\Admin\CalendarioAdoracionAdmin
-        arguments: [~, ~, ~]
+        arguments: [~, App\Entity\Adorador, App\Controller\CalendarioController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Calendarios , label: Adoración }
-        public: false
+        public: true
+
+    admin.calendario_confesion:
+        class: App\Admin\CalendarioSacerdoteAdmin
+        arguments: [~, App\Entity\Sacerdote, App\Controller\CalendarioController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Calendarios , label: Confesiones }
+        public: true
 
     admin.obispo:
         class: App\Admin\ObispoAdmin

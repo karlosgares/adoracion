@@ -3,16 +3,29 @@
 
 
 <script>
+{% if calendar_listado is not defined %}
+{% set color = sonata_admin.admin.getColor() %}
+{% set tipo = sonata_admin.admin.getTipo() %}
+{% set editable = true %}
+{% set minTime = sonata_admin.admin.getMinTime() %}
+{% set maxTime = sonata_admin.admin.getMaxTime() %}
+{% set headerRight = sonata_admin.admin.getHeaderRight() %}
+{% else %}
+
+{% endif %}
+
+
 $(function() {
 
 
   // page is now ready, initialize the calendar..
   var data =  dataFromForm();
+  
   $('#calendar').fullCalendar({
 	header: {
 	    left: '<<',
 	    center: 'title',
-	    right: 'prev,next'
+	    right: {{ headerRight }}
 	},
     eventSources: [
 	    // your event source
@@ -23,7 +36,7 @@ $(function() {
 	        id: data['id'],
 	        tipo: data['className']
 	      },
-	      color: '{{ sonata_admin.admin.getColor() }};',    // an option!
+	      color: '{{ color }};',    // an option!
 	      textColor: 'black',  // an option!
 	      error: function() {
         	alert('there was an error while fetching events!');
@@ -39,26 +52,47 @@ $(function() {
    slotDuration: '01:00:00',
    allDaySlot:false,
    selectable: true,
-   editable: true,
-   slotLabelFormat:'H:mm',                              
+   editable: {{ editable }},
+   slotLabelFormat:'H:mm', 
+   minTime: '{{ minTime }}',
+   maxTime: '{{ maxTime }}',
+   {% if calendar_listado is not defined %}
+   eventClick:function(event, element) {
+   		if (confirm('¿Quieres borrar la hora?')) {
+   			$.ajax({
+				  url: "/ajax/deletediasemanahora/" + event.id,
+				  method: 'GET'
+				}).done(function(res) { 
+				 	if (res) {
+				 		$('#calendar').fullCalendar('removeEvents',event._id);
+				 		$('#calendar').fullCalendar( 'rerenderEvents' )
+				 	}
+				}
+			);
+
+   		}
+   },                                 
    select:function(start, end){
+   		
     	var uniqid = data['uniqid'];
-   		var tipohora = {{ sonata_admin.admin.getTipo() }};
+   		var tipohora = {{ tipo }};
     	$.ajax({
 			  url: "/ajax/savediasemanahora",
 			  data: {'tipohora': tipohora, 'id': data['id'], 'start': start._i, 'end': end._i, 'className': data['className']},
 			  method: 'POST'
 			}).done(function(res) { 
-			 	var event = {'start': res.start, 'end': res.end, 'title': res.title,   backgroundColor: '{{ sonata_admin.admin.getColor() }}' };
+			 	var event = {'start': res.start, 'end': res.end, 'title': res.title,   backgroundColor: '{{ color }}' };
 		         $('#calendar').fullCalendar( 'renderEvent', event);
 		         $('#calendar').fullCalendar( 'rerenderEvents' )
 			}
 		);
     },
+    {% endif %}
   })
 });
 
 
+{% if calendar_listado is not defined %}
 function dataFromForm() {
 	var ret = [];
 	var action = $('form').attr('action');
@@ -69,5 +103,14 @@ function dataFromForm() {
 	ret['className'] = arr[arr.length-3]
 	return ret;
 }
+{% else %}
+function dataFromForm() {
+	var ret = [];
+	ret['uniqid'] = '';
+	ret['id'] = 0
+	ret['className'] = '{{ className }}';
+	return ret;
+}
+{% endif %}
 </script>
 {% endblock %}

@@ -7,10 +7,34 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\DiasemanaHora;
+use App\Entity\Nota;
 
 class WebController extends AbstractController
 {
     
+    /**
+     * @Route("/web/savenota", name="web_save_nota")
+     */
+    public function saveNotaAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $post = $request->request->all();
+        $now = new \DateTime('NOW');
+        $now->add(new \DateInterval('P1M'));
+        $nota = new Nota();
+        $nota->setFecha(new \DateTime($now->format('Y-m-1')));
+        $nota->setTipo($post['tiponota']);
+        $nota->setTexto($post['textonota']);
+        $nota->setValida(false);
+        $em->persist($nota);
+        $em->flush();
+        $return['ok'] = true;
+        return new JsonResponse($return, 200);
+    }
+
+
+
+
 	/**
      * @Route("/web", name="web_index")
      */
@@ -19,6 +43,19 @@ class WebController extends AbstractController
         setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
         $now = new \DateTime('NOW');
         $data['mes'] = strtoupper($now->format('F'));
+        $data['obispo'] =  $this->getQueryNotas([1])->getQuery()->getResult();
+        /// noticias
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('n')
+                   ->from('App:Noticia', 'n')
+                   ->where('n.activo=1')
+                   ->andwhere("n.fechaalta <=:fecha")
+                   ->andwhere("n.fechabaja >= :fecha or n.fechabaja is null")->setParameter('fecha',$now->format('Y-m-d'))
+                   ->orderBy('n.fechaalta','desc')
+        ;
+        $data['noticias'] = $qb->getQuery()->getResult();
+
         return $this->render('Web/index.html.twig',$data);
     }
 
@@ -56,13 +93,13 @@ class WebController extends AbstractController
                     if (!array_key_exists($index, $arrW))
                             $horas[$index] = 1;
                     else    $horas[$index] += 1;
-                    if ($post['tipo'] == 1) {
-                        $title = $horas[$index];
-                        $color = ($horas[$index] > 1)?"blue":"red";
+                    if ($post['tipo'] == 'adorador') {
+                        $title = '';
+                        $color = ($horas[$index] > 1)?"#88AA88":"gold";
                     }
                     else {
-                        $title = "";
-                        $color = "green";
+                        $title = $entity->getNombre();
+                        $color = "blue";
                     }
                     
                     $start = clone $arrW[$dia->getHora()->format("w")]; 
@@ -82,18 +119,7 @@ class WebController extends AbstractController
     public function notasAction(Request $request)
     {
         $ret = [];
-        $now = new \DateTime('NOW');
-        $fecha = \DateTime::createFromFormat("Y-m-d H", $now->format('Y') ."-". $now->format('m')."-1 00");
-        $fin = clone $fecha;
-        $fin->add( new \DateInterval('P1M'));
-        $fin->sub( new \DateInterval('P1D'));
-        $em = $this->getDoctrine()->getEntityManager();
-        $qb = $em->createQueryBuilder();
-        $qb->select('n')
-                   ->from('App:Nota', 'n')
-                   ->where('n.valida=1 and n.tipo in (2,3)')
-                   ->andwhere("n.fecha BETWEEN :fecha AND :fin")->setParameter('fecha',$fecha)->setParameter('fin',$fin)
-        ;
+        $qb = $this->getQueryNotas([2,3]);
 
         $ret[2] = $ret[3] = [];
         foreach ($qb->getQuery()->getResult() as $nota) {
@@ -145,5 +171,22 @@ class WebController extends AbstractController
             $data['msgError'] = "No existe la noticia";
         }
         return $this->render('Web/noticia.html.twig',$data);
+    }
+
+    public function getQueryNotas($arr) {
+        $now = new \DateTime('NOW');
+        $fecha = \DateTime::createFromFormat("Y-m-d H", $now->format('Y') ."-". $now->format('m')."-1 00");
+        $fin = clone $fecha;
+        $fin->add( new \DateInterval('P1M'));
+        $fin->sub( new \DateInterval('P1D'));
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('n')
+                   ->from('App:Nota', 'n')
+                   ->where('n.valida=1 and n.tipo in ('.implode(",", $arr).')')
+                   ->andwhere("n.fecha BETWEEN :fecha AND :fin")->setParameter('fecha',$fecha)->setParameter('fin',$fin)
+        ;
+
+        return $qb;
     }
 }

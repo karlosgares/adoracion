@@ -5,10 +5,10 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use App\Type\Form\CalendarType;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class CalendarioAdoracionAdmin extends UsuarioAdmin
+class CalendarioSacerdoteAdmin extends UsuarioAdmin
 {
-	protected $baseRoutePattern = 'calendario_adoracion';
-	protected $baseRouteName = 'calendario_adoracion';
+	protected $baseRoutePattern = 'calendario_confesion';
+	protected $baseRouteName = 'calendario_confesion';
 
 	/*protected function configureShowFields(ShowMapper $showMapper)
     {
@@ -18,7 +18,7 @@ class CalendarioAdoracionAdmin extends UsuarioAdmin
     */
 
     public function toString($entity){
-        return "Calendario de adoradores";
+        return "Calendario de confesiones";
     } 
 
     protected function configureRoutes(RouteCollection $collection)
@@ -26,12 +26,7 @@ class CalendarioAdoracionAdmin extends UsuarioAdmin
          $collection->clearExcept('list');
     }
 
-    public function getTipo() { return 1;}
-    public function getColor() { 
-        return "blue";
-    }
-
-    public function getClassName() { return 'adorador';}
-    public function getMinTime() { return '00:00:00'; }
-    public function getMaxTime() { return '23:00:00'; }
+    public function getClassName() { return "sacerdote"; }
+    public function getMinTime() { return '07:00:00'; }
+    public function getMaxTime() { return '21:00:00'; }
 }

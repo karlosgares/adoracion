@@ -22,12 +22,10 @@ sonata_admin:
                 item: admin.sacerdote
 
             Calendarios:
-                on-top: true
+                on-top: false
                 label: ~
                 label_catalogue: ~
                 icon: '<i class="fa fa-circle-o"></i>'
-                items:
-                        - admin.calendario_adoracion
             
             Peticiones del obispo:
                 on-top: true

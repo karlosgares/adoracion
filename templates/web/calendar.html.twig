@@ -19,6 +19,7 @@ $(function() {
 	        tipo: '{{ tipo }}'
 	      },
 	      textColor: 'black',  // an option!
+	      backgroundColor: 'red',
 	      error: function() {
         	alert('there was an error while fetching events!');
       	   },
@@ -35,7 +36,10 @@ $(function() {
    selectable: false,
    editable: false,
    slotLabelFormat:'H:mm',
-   slotLabelInterval: false
+   slotLabelInterval: false,
+   minTime: '{{ minTime }}',
+   maxTime: '{{ maxTime }}',
+   displayEventTime : false
   })
 });
 

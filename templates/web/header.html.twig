@@ -3,14 +3,16 @@
 <head>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('bundles/app/css/web.css') }}">
 <link rel="stylesheet" href="{{ asset('bundles/app/css/fullcalendar.min.css') }}">
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.min.js') }}""></script>
-<script src="/bundles/sonatacore/vendor/jquery/dist/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <script src="/bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.min.js"></script>
 <script src="/bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js"></script>
 <script src="/bundles/sonataadmin/vendor/jqueryui/ui/minified/i18n/jquery-ui-i18n.min.js"></script>
@@ -24,20 +26,20 @@
 </head>
 <body>
 	<header>
+		<div class="container-fluid head"></div>
 		<div class="container-fluid">
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    			<span class="navbar-toggler-icon"></span>
+  				</button>
+  			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 	  				<ul class="navbar-nav mr-auto sf-menu">
 						<li  class="current"><a href="javascript:goto('home');">Inicio</a></li>
 						<li><a href="javascript:goto('noticias');">Noticias</a></li>
-						<li><a href="javascript:goto('gracias');">Intenciones y gracias</a></li>
-						<li><a href="javascript:goto('adorador');">Adoradores</a></li>
+						<li><a href="javascript:goto('gracias');">Intenciones y acción gracias</a></li>
 					</ul>
 				</div>
-				<div class="pull-right">Adoración perpetua. 24h 365 días al año</div>
+				<div class="pull-right"></div>
 			</nav>
 		</div>
 	</header>

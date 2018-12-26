@@ -26,7 +26,7 @@ class UsuarioAdmin extends AbstractAdmin
                     ->add('nombre', TextType::class)
                     ->add('apellidos', TextType::class, ['required'=>false])
                     ->add('email', EmailType::class, ['required'=>false])
-                    ->add('telefono', TextType::class)
+                    ->add('telefono', TextType::class, ['required'=>false])
         ;    
         
         if ($this->getSubject() instanceOf \App\Entity\Adorador) {

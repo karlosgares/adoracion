@@ -1,0 +1,19 @@
+{% extends '@SonataAdmin/CRUD/list.html.twig' %}
+{% set action = 'list' %}
+{% block list_filters_actions %}
+{% endblock %}
+{% block list_filters %}
+{% endblock %}
+
+
+{% block navbar_title %}
+    {{title}}
+{% endblock %}
+
+{% block list_table %}
+	{% set calendar_listado = true %}
+	{% set editable = 0 %}
+	{% set color = '#ccc' %}
+	{% set tipo = 1 %}
+    {% include 'form/calendar.html.twig' %}
+{% endblock %}

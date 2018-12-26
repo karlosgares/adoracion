@@ -1,71 +1,118 @@
 {% include 'web/header.html.twig' %}	
-	<div class="clear"></div>
 	<div class="bg1">
 		<div class="container-fluid">
 			<section id="section-home" class="section" data-loaded="0">
-			<h3>Inicio</h3>
+			<h4 class="h-title">Inicio</h4>
 			<div class="row">
-				<div class="col-xs-12 col-md-6">
+				<div class="col-xs-12 col-sm-6">
+					<div class="card">
+						<div class="card-header">
+						 <i class="fas fa-pray"></i> Intenciones del mes de Don Marío Iceta
+					  	</div>
+					  	<div class="card-body">
+					    	<ol id="lista-nota-1">
+					    		{% for nota in obispo %}
+					    		<li>{{ nota.getTexto() }}</li>	
+					    		{% endfor %}
+					    	</ol>
+					  	</div>
+				  	</div>		
+					<div class="clear"></div>
+					<div class="card">
+						<div class="card-header">
+						   <i class="fas fa-calendar-plus"></i> Confesiones
+					  	</div>
+					  	<div class="card-body">
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '20:00:00' } %}
+						{% include 'Web/calendar.html.twig' with vars %}
+					  	</div>
+					</div>
+					<div class="clear"></div>
+					<div class="card">
+						<div class="card-header">
+						   <i class="fas fa-newspaper"></i> Noticias
+					  	</div>
+					  	
+					  	<div class="card-body">
+							<div id="carouselNoticias" class="carousel slide" data-ride="carousel">
+							  <div class="carousel-inner">
+							    {% for nota in noticias %}
+						    	<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"><a href="web/noticia/{{ nota.getId() }}" class="list-noticia">{{ nota.getTitulo() }}</a></div>
+						  		{% endfor %}
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
 					<div class="card">
 					  <div class="card-header">
-					    ADORACIÓN EUCARÍSTICA PERPETUA
+					    <i class="fas fa-praying-hands"></i> Adoración Eucarística perpetua
 					  </div>
 					  <div class="card-body">
 					    <h6>El Señor te espera...</h6>
 					    <span class="home-text">...24 horas al día</span><br />
 					    <span class="home-text">...365 días al año</span><br />
-					    <span class="home-text">Abierta paro todos los que lo deseen.</span><br />
-					    <span class="home-text">Si quieres apuntarte...</span><br />
-					    <span class="home-text"><i class='fa fa-phone'></i> Llamanos al 606 770 181</span><br />
-					    <span class="home-text"><i class='fa fa-email'></i> Escríbenos a adoracionperpetua.bilbao@gmail.com</span>
-					    </span>
+					    Abierta paro todos los que lo deseen.<br />
+					    <span class="home-text">Apúntate</span>
  	 				  </div>
 					</div>
-				</div>
-				<div class="col-xs-12 col-md-6">
+				  	<div class="clear"></div>
+				  	{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00'} %}
 					<div class="card">
 						<div class="card-header">
-						    INTENCIONES {{ mes }} de DON MARÍO ICETA
-					  	</div>
-					  	<div class="card-body">
-					    	<ol id="lista-nota-1"></ol>
-					  	</div>
-				  	</div>
-				</div>
-			</div>
-			<div class="row"><div style="height:30px"></div></div>
-			<div class="row">
-				<div class="col-xs-12 col-md-12">
-					<div class="card">
-						<div class="card-header">
-						    Confesiones
-					  	</div>
-					  	<div class="card-body">
-					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar') } %}
+						<i class="fa fa-calendar" aria-hidden="true"></i> Adoradores
+						<div class="card-body">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<span class='uno'>&nbsp;&nbsp;&nbsp;</span>&nbsp;Sólo un adorador
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<span class='dos'>&nbsp;&nbsp;&nbsp;</span>&nbsp;Más de un adorador</div>
+							</div>
+						</div>
 						{% include 'Web/calendar.html.twig' with vars %}
-					  	</div>
-					</div> 
+						</div>
+					</div>
+					<div class="clear"></div>
+					<div class="card">
+						<div class="card-header">
+						<i class="fas fa-home"></i> Contacto
+						</div>
+						<div class="card-body">
+						<info><i class='fa fa-phone'></i> 606 770 181<br />
+						<i class="far fa-envelope"></i> adoracionperpetua.bilbao@gmail.com<br />
+						<i class="fas fa-church"></i> Parroquia de Nuestra Señora del Carmen.<br /> Calle Simón Bolívar, 4 CP 48010 Bilbao</info>
+						</div>
+					</div>
 				</div>
 			</div>	
 			</section>
-			
+			<div class="container-fluid">
 			<section id="section-noticias" class="section" data-loaded="0" style="display:none;">
-				<h3>Noticias</h3>
+				<h4 class="h-title">Noticias</h4>
 				<div class="card">
-				<div class="card-body">
-				<ul class="list-group" id="list-noticias">
-				  
-				</ul>
-				</div></div>
+					<div class="card-body">
+						<ul class="list-group" id="list-noticias">
+						  {% for nota in noticias %}
+						  <li class="list-group-item"><a href="web/noticia/{{ nota.getId() }}" class="list-noticia">{{ nota.getTitulo() }}</a></li>
+						  {% endfor %}
+						</ul>
+					</div>
+				</div>
 			</section>
 			
 			<section id="section-gracias" class="section" data-loaded="0" style="display:none;">
-				<h3>Intenciones personales y acciones de gracias</h3>
+				<h4 class="h-title">Intenciones personales y acciones de gracias</h4>
 				<div class="row">
 					<div class="col-xs-12 col-md-6">
 						<div class="card">
 						  <div class="card-header">
-						    Intenciones
+						    <div class='row'>
+							  	<div class='col-sm-10'><i class="fas fa-pray"></i> Intenciones</div><div class='col-sm-2 text-right'>
+						    <button class='btn btn btn-light btn-sm' onclick='AbrirModal(2)' data-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+						  		</div>
+						  	</div>
 						  </div>
 						  <div class="card-body">
 							<ul id="lista-nota-2"></ul>
@@ -75,7 +122,10 @@
 					<div class="col-xs-12 col-md-6">
 						<div class="card">
 							  <div class="card-header">
-							    Gracias
+							  	<div class='row'>
+							  		<div class='col-sm-10'>
+							    <i class="fas fa-praying-hands"></i> Acción de gracias</div>
+							    	<div class='col-sm-2 text-right'><button class='btn btn btn-light btn-sm' onclick='AbrirModal(3)' data-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></div></div>
 							  </div>
 							  <div class="card-body">
 									<ul id="lista-nota-3"></ul>
@@ -85,14 +135,54 @@
 					</div>
 				</div>
 			</section>
-			<section id="section-adorador" class="section" data-loaded="1" style="display:none;">
-			{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar') } %}
-				<br />
-				<h3>Adoradores</h3>
-				{% include 'Web/calendar.html.twig' with vars %}
+			
+			{#<section id="section-adorador" class="section">
+			{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00'} %}
+				<h4 class="h-title">Adoradores</h4>
+				<div class="card">
+					<div class="card-header">
+					<div class="row">
+					<div class="col-xs-12 col-sm-12">
+						<span class='uno'>&nbsp;&nbsp;&nbsp;</span>&nbsp;Sólo un adorador
+					</div>
+					<div class="col-xs-12 col-sm-12">
+					<span class='dos'>&nbsp;&nbsp;&nbsp;</span>&nbsp;Más de un adorador</div>
+					</div>
+					</div>
+					<div class="card-body">
+					{% include 'Web/calendar.html.twig' with vars %}
+					</div>
+				</div>
 			</section>
+			#}
+			</div>
 		</div>
 	</div>
+
+<!--- Modal --->
+<div class="modal" tabindex="-1" role="dialog" id='modal-nota'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title-3">Tu acción de gracias</h5>
+        <h5 class="modal-title" id="modal-title-2">Tu intención</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-nota" name='form-nota'>
+        <input type='hidden' value='' id='tiponota' name='tiponota'>
+        <textarea rows='5' class="form-control"  id='textonota' name='textonota'></textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onClick='action_SaveNota("{{ path('web_save_nota') }}")'>Enviar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% include 'web/footer.html.twig' %}
 {% block end_javascript %}
 <script>
@@ -106,15 +196,6 @@ $(function() {
 		 	}
 		}
 	);
-
-	$.ajax({
-		  url: "{{ path('web_load_noticias') }}",
-		  method: 'GET'
-		}).done(function(res) { 
-		 	$('#list-noticias').html(res['noticias'])
-		}
-	);	
-
 });
 </script>
 {% endblock %}
