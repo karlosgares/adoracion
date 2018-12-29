@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\DiasemanaHora;
 use App\Entity\Nota;
+use App\Entity\Adorador;
+use App\Manager\CalendarioManager;
+
 
 class WebController extends AbstractController
 {
@@ -55,7 +58,8 @@ class WebController extends AbstractController
                    ->orderBy('n.fechaalta','desc')
         ;
         $data['noticias'] = $qb->getQuery()->getResult();
-
+        $data['color0'] = Adorador::color0;
+        $data['color1'] = Adorador::color1;
         return $this->render('Web/index.html.twig',$data);
     }
 
@@ -64,51 +68,16 @@ class WebController extends AbstractController
      */
     public function calendarAction(Request $request)
     {
-        $ret = [];
         $em = $this->getDoctrine()->getEntityManager();
         $post = $request->request->all();
-        $className = ucfirst($post['tipo']);
-        $entities = $em->getRepository("App\\Entity\\" . $className)->findAll();
-
-        $start = new \DateTime($post['start']);
-        $end = new \DateTime($post['end']);
-        $bSeguir = true;
-        $arrW = [];
-        $horas = [];
-        while($bSeguir) {
-            $arrW[$start->format("w")] = clone $start;
-            $start->add( new \DateInterval('P1D'));
-            $bSeguir = (!array_key_exists($start->format("w"), $arrW));
-        }
-        
-        foreach ($entities as $entity) {
-            foreach ($entity->getDiasemanahoras() as $dia) {
-                $title = '';
-                $horainicio = intval($dia->getHora()->format('H'));
-                $horafin = intval($dia->getFin()->format('H'));
-                
-                for ($h=$horainicio; $h<$horafin;$h++) {
-                    $index = sprintf('%sT%s', $dia->getHora()->format('Y-m-d'), "{$h}:00:00");
-
-                    if (!array_key_exists($index, $arrW))
-                            $horas[$index] = 1;
-                    else    $horas[$index] += 1;
-                    if ($post['tipo'] == 'adorador') {
-                        $title = '';
-                        $color = ($horas[$index] > 1)?"#88AA88":"gold";
-                    }
-                    else {
-                        $title = $entity->getNombre();
-                        $color = "blue";
-                    }
-                    
-                    $start = clone $arrW[$dia->getHora()->format("w")]; 
-                    $data = ['start'=> sprintf('%sT%s', $start->format('Y-m-d'),$dia->getHora()->format('H:i:s')), 'title' => $title, 'allDay' =>false, 'backgroundColor' => $color];
-
-                    $data['end'] = sprintf('%sT%s', $start->format('Y-m-d'),str_pad($dia->getHora()->format("H") + 1, 2,'0',  STR_PAD_LEFT) . ":00:00");
-                    $ret[$index] = $data;
-                }
-            } 
+        $post['id'] = 0;
+        switch($post['tipo']) {
+            case 'adorador':
+                $ret = CalendarioManager::getAdoradoresDias($em, $post);
+            break;
+            case 'sacerdote':
+                $ret = CalendarioManager::getSacerdotesDias($em, $post);
+            break;
         }
         return new JsonResponse(array_values($ret), 200);
     }

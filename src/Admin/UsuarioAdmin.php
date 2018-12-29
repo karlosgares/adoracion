@@ -30,13 +30,17 @@ class UsuarioAdmin extends AbstractAdmin
         ;    
         
         if ($this->getSubject() instanceOf \App\Entity\Adorador) {
-            $formMapper->add('sustitucionfranja', ChoiceType::class, ['label'=> 'Franja horaria de sustituto', 'required'=>false, 'choices'=>array_flip(Adorador::getSustitucionfranjas()), 'placeholder'=> 'Elegir para sustitutos']);
+            $formMapper->add('sustitucionfranja', ChoiceType::class, ['label'=> 'Franja horaria de sustituto', 'required'=>false, 'choices'=>array_flip(Adorador::getSustitucionfranjas()), 'placeholder'=> 'Elegir para sustitutos'])
+                ->add('baja')
+
+            ;
+
         }        
 
                 $formMapper->end()->end()
         ;
         if ($this->getSubject()->getId() > 0) {
-                $formMapper->tab('Caledario')
+                $formMapper->tab('Calendario')
                 ->add('diasemanahoras', CalendarType::class, ['label' => false])
                 ->end()->end()
             ;
@@ -51,7 +55,18 @@ class UsuarioAdmin extends AbstractAdmin
                     ->add('telefono')
         ;
         if ($this->getBaseRoutePattern() == 'adorador') {
-            $datagridMapper->add('sustitucionfranja',null,['label'=> 'Franja horaria de sustituto'], ChoiceType::class, ['choices'=>array_flip(Adorador::getSustitucionfranjas())]);
+            $horas = [];
+            for ($i =0; $i< 24; $i++) {
+                $h = sprintf('%s:00', $i);
+                $horas[$h] = $h;
+            }
+
+            $datagridMapper->add('diasemanahoras.dayofweek',null,['label'=> 'Día de la semana'], ChoiceType::class, ['choices'=>array_flip(Adorador::getDayofweek())])
+                ->add('hora','doctrine_orm_choice',['label'=> 'Hora'], ChoiceType::class, ['choices'=>$horas])
+                ->add('sustitucionfranja',null,['label'=> 'Franja horaria de sustituto'], ChoiceType::class, ['choices'=>array_flip(Adorador::getSustitucionfranjas())])
+
+
+            ;
         }
     }
 

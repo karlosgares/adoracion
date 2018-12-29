@@ -23,7 +23,7 @@
 						   <i class="fas fa-calendar-plus"></i> Confesiones
 					  	</div>
 					  	<div class="card-body">
-					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '20:00:00' } %}
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'headerRight': 'prev,next' } %}
 						{% include 'Web/calendar.html.twig' with vars %}
 					  	</div>
 					</div>
@@ -58,17 +58,17 @@
  	 				  </div>
 					</div>
 				  	<div class="clear"></div>
-				  	{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00'} %}
+				  	{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00', 'headerRight': '' } %}
 					<div class="card">
 						<div class="card-header">
 						<i class="fa fa-calendar" aria-hidden="true"></i> Adoradores
 						<div class="card-body">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
-								<span class='uno'>&nbsp;&nbsp;&nbsp;</span>&nbsp;Sólo un adorador
+								<span class='tag-adorador' style="background-color:{{ color0 }}">&nbsp;&nbsp;&nbsp;</span>&nbsp;Sólo un adorador
 							</div>
 							<div class="col-xs-12 col-sm-6">
-								<span class='dos'>&nbsp;&nbsp;&nbsp;</span>&nbsp;Más de un adorador</div>
+								<span class='tag-adorador' style="background-color:{{ color1 }}">&nbsp;&nbsp;&nbsp;</span>&nbsp;Más de un adorador</div>
 							</div>
 						</div>
 						{% include 'Web/calendar.html.twig' with vars %}

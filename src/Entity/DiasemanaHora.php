@@ -53,6 +53,11 @@ class DiasemanaHora
      */
     private $fin;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $idcopia;
+
     public function __construct()
     {
         $this->sacerdotes = new ArrayCollection();

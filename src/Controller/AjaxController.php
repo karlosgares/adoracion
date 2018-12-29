@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\DiasemanaHora;
+use App\Manager\CalendarioManager;
 
 class AjaxController extends AbstractController
 {
@@ -35,56 +36,16 @@ class AjaxController extends AbstractController
     	$ret = [];
     	$em = $this->getDoctrine()->getEntityManager();
     	$post = $request->request->all();
-    	$id = $post['id'];
-        $className = ucfirst($post['tipo']);
-    	$start = new \DateTime($post['start']);
-		$end = new \DateTime($post['end']);
-		$bSeguir = true;
-		$arrW = [];
-		while($bSeguir) {
-			$arrW[$start->format("w")] = clone $start;
-			$start->add( new \DateInterval('P1D'));
-			$bSeguir = (!array_key_exists($start->format("w"), $arrW));
-		}
-    	
-        if ($id > 0)
-            $entities = $em->getRepository("App\\Entity\\" . $className)->findById($id);
-        else $entities = $em->getRepository("App\\Entity\\" . $className)->findAll();
-        
-        $arrDay = [];
-        foreach ($entities as $entity)
-        foreach ($entity->getDiasemanahoras() as $dia) {
-            if ($id == 0) {
+    	switch($post['tipo']) {
+            case 'adorador': /// sólo una semana 
+                $ret = CalendarioManager::getAdoradoresDias($em, $post);
+            break;
+            case 'sacerdote': /// sólo una semana 
+                $ret = CalendarioManager::getSacerdotesDias($em, $post);
+            break;
+        }
 
-                if ($post['tipo'] == "adorador") {
-                    $idx = $start->format('Y-m-d') . $dia->getHora()->format('H:i');
-                    if (!array_key_exists($idx, $arrDay))
-                            $arrDay[$idx] = 1;
-                    else    $arrDay[$idx]++;
-                    $title = $arrDay[$idx];
-                    $color = ($arrDay[$idx] > 1)?'green':'gold';
-                }
-                else {   
-                    $color = "blue";
-                    $title = $entity->getNombre();
-                    $idx = count($ret);
-                }
-            }
-            else {
-                $title = '';
-                $idx = count($ret);
-                $color = $entity->getColor();
-            }
-            $start = clone $arrW[$dia->getHora()->format("w")];	
-            $data = ['id'=> $dia->getId(), 'start'=> sprintf('%sT%s', $start->format('Y-m-d'),$dia->getHora()->format('H:i:s')), 'title' => $title, 'allDay' =>false, 'backgroundColor' => $color];
-            
-            if (!is_null($dia->getFin())) {
-            	$data['end'] = sprintf('%sT%s', $start->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
-        	}
-            $ret[$idx] = $data;
-        } 
- 
-         return new JsonResponse(array_values($ret), 200);
+        return new JsonResponse(array_values($ret), 200);
 
     }
 

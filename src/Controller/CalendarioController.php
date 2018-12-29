@@ -14,7 +14,7 @@ class CalendarioController extends CRUDController
 	    $vars["className"] = $this->admin->getClassName();
     	$vars["minTime"] = $this->admin->getMinTime();
     	$vars["maxTime"] = $this->admin->getMaxTime();
-
+        $vars["headerRight"] = $this->admin->getHeaderRight();
         return $this->render('crud/list_calendar.html.twig',$vars);
     }
 

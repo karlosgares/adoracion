@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\SacerdoteRepository")
  */
 class Sacerdote
-{
+{   
+    const color = "#AAAAFF";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -132,5 +133,5 @@ class Sacerdote
         return $this;
     }
 
-    public function getColor() { return 'green'; }
+    public function getColor() { return self::color; }
 }

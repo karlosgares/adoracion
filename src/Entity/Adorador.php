@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Adorador
 {
+    
+    const color0 = "red";
+    const color1 = "#44FF44";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -47,6 +50,14 @@ class Adorador
      * @ORM\ManyToMany(targetEntity="DiasemanaHora", inversedBy="adoradores")
      */
     private $diasemanahoras;
+
+
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $baja;
+
+    public $hora;
 
     public function __construct()
     {
@@ -136,7 +147,7 @@ class Adorador
         return $this;
     }
 
-    public function getColor() { return 'gold'; }
+    public function getColor() { return self::color1; }
 
     public function getSustitucionfranja(): ?int
     {
@@ -153,5 +164,22 @@ class Adorador
     public static function getSustitucionfranjas() {
 
         return ['0:00-6:00 Madrugada','6:00-12:00 Mañana','12:00-18:00 Tarde', '18:00-24:00 Noche'];
+    }
+
+    public static function getDayofweek() {
+        $ret = [1 => 'Lunes', 2=>'Martes', 3=> 'Miércoles', 4=> 'Jueves', 5=> 'Viernes', 6=> 'Sábado', 0=> 'Domingo'];
+        return $ret;
+    }
+
+    public function getBaja(): ?bool
+    {
+        return $this->baja;
+    }
+
+    public function setBaja(?bool $baja): self
+    {
+        $this->baja = $baja;
+
+        return $this;
     }
 }

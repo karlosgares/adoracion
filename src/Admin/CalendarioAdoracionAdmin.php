@@ -34,4 +34,5 @@ class CalendarioAdoracionAdmin extends UsuarioAdmin
     public function getClassName() { return 'adorador';}
     public function getMinTime() { return '00:00:00'; }
     public function getMaxTime() { return '23:00:00'; }
+    public function getHeaderRight() { return ''; }
 }

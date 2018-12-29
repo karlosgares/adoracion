@@ -3,6 +3,7 @@ sonata_admin:
     options:
         title_mode: 'single_text'
     search: false
+    show_mosaic_button:   false
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
@@ -62,7 +63,7 @@ sonata_admin:
 
     assets:
         # stylesheet paths to add to the page in addition to the list above
-        extra_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-blue.min.css','bundles/app/css/fullcalendar.min.css']
+        extra_stylesheets: ['bundles/app/css/admin.css','bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-blue.min.css','bundles/app/css/fullcalendar.min.css']
 
         # stylesheet paths to remove from the page
         remove_stylesheets: ['bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css']
