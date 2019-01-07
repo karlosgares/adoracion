@@ -22,6 +22,14 @@ class UsuarioAdmin extends AbstractAdmin
     
     protected function configureFormFields(FormMapper $formMapper)
     {
+        
+        if ($this->getSubject()->getId() > 0) {
+                $formMapper->tab('Calendario')
+                ->add('diasemanahoras', CalendarType::class, ['label' => false])
+                ->end()->end()
+            ;
+        }
+
         $formMapper->tab('Datos básicos')
                     ->add('nombre', TextType::class)
                     ->add('apellidos', TextType::class, ['required'=>false])
@@ -37,14 +45,8 @@ class UsuarioAdmin extends AbstractAdmin
 
         }        
 
-                $formMapper->end()->end()
+        $formMapper->end()->end()
         ;
-        if ($this->getSubject()->getId() > 0) {
-                $formMapper->tab('Calendario')
-                ->add('diasemanahoras', CalendarType::class, ['label' => false])
-                ->end()->end()
-            ;
-        }
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -57,14 +59,15 @@ class UsuarioAdmin extends AbstractAdmin
         if ($this->getBaseRoutePattern() == 'adorador') {
             $horas = [];
             for ($i =0; $i< 24; $i++) {
-                $h = sprintf('%s:00', $i);
-                $horas[$h] = $h;
+                $h = sprintf('%s:00:00', str_pad($i,2,'0', STR_PAD_LEFT));
+                $hm = sprintf('%s:00', str_pad($i,2,'0', STR_PAD_LEFT));
+                $horas[$hm] = $h;
             }
 
             $datagridMapper->add('diasemanahoras.dayofweek',null,['label'=> 'Día de la semana'], ChoiceType::class, ['choices'=>array_flip(Adorador::getDayofweek())])
-                ->add('hora','doctrine_orm_choice',['label'=> 'Hora'], ChoiceType::class, ['choices'=>$horas])
+                ->add('diasemanahoras.hhmm',null,['label'=> 'Hora'], ChoiceType::class, ['choices'=>$horas])
                 ->add('sustitucionfranja',null,['label'=> 'Franja horaria de sustituto'], ChoiceType::class, ['choices'=>array_flip(Adorador::getSustitucionfranjas())])
-
+                ->add('baja')
 
             ;
         }

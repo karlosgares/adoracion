@@ -7,7 +7,7 @@ use App\Entity\Adorador;
 
 abstract class CalendarioManager {
 
-	public static function getAdoradoresDias($em, $post) {
+	public static function getAdoradoresDias($em, $post, $bWeb = false) {
         $ret = [];
         $id = $post['id'];
         $className = ucfirst($post['tipo']);
@@ -37,7 +37,9 @@ abstract class CalendarioManager {
                     if (!array_key_exists($idx, $arrDay))
                             $arrDay[$idx] = 1;
                     else    $arrDay[$idx]++;
-                    $title = $arrDay[$idx];
+                    
+                    $title = ($bWeb)?'':$arrDay[$idx];
+                   
                     $color = ($arrDay[$idx] > 1)?Adorador::color1:Adorador::color0;
                 }
                 else {

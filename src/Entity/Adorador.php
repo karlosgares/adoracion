@@ -57,8 +57,6 @@ class Adorador
      */
     private $baja;
 
-    public $hora;
-
     public function __construct()
     {
         $this->diasemanahoras = new ArrayCollection();

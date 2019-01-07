@@ -1,4 +1,5 @@
 {% block calendar_widget %}
+   <div class='ajax-loader' style='padding-left: 30px;'><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}'></div>
    <div id="calendar"></div>
 
 
@@ -56,6 +57,14 @@ $(function() {
    slotLabelFormat:'H:mm', 
    minTime: '{{ minTime }}',
    maxTime: '{{ maxTime }}',
+   loading: function( isLoading, view ) {
+            if(isLoading) {// isLoading gives boolean value
+                console.info('loading');
+            } else {
+                $('.ajax-loader').hide();
+            }
+        }
+    ,
    {% if calendar_listado is not defined %}
    eventClick:function(event, element) {
    		if (confirm('¿Quieres borrar la hora?')) {
@@ -88,7 +97,7 @@ $(function() {
 		);
     },
     {% endif %}
-  })
+  });
 });
 
 

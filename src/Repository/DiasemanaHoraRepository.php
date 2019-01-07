@@ -67,8 +67,8 @@ class DiasemanaHoraRepository extends ServiceEntityRepository
             SELECT dayofweek, DATE_ADD(hora, INTERVAL 7 DAY), tipo,  DATE_ADD(fin, INTERVAL 7 DAY), id FROM diasemana_hora WHERE hora >=:hora and tipo=:tipo";
 
             $stmt = $em->getConnection()->prepare($sql);
-            $stmt->bindValue(':tipo', $tipo);
             $stmt->bindValue(':hora', $last->format('Y-m-d 00:00:00'));
+            $stmt->bindValue(':tipo', $tipo);
             $result = $stmt->execute();
 
             
@@ -79,8 +79,8 @@ class DiasemanaHoraRepository extends ServiceEntityRepository
                  WHERE hora >=:hora and tipo=:tipo";
 
                 $stmt = $em->getConnection()->prepare($sql);
-                $stmt->bindValue(':tipo', $tipo);
                 $stmt->bindValue(':hora', $last->format('Y-m-d 00:00:00'));
+                $stmt->bindValue(':tipo', $tipo);
                 $result = $stmt->execute();
             }
 

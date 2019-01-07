@@ -158,4 +158,57 @@ class WebController extends AbstractController
 
         return $qb;
     }
+
+    /**
+     * @Route("/ajax/getnoticia", name="app_web_getnoticia")
+     */
+    public function getnoticiaAction(Request $request)
+    {
+        $post = $request->request->all();
+        $className = "Noticia";
+        $id = $post['id'];
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        if ($id > 0)
+                $entity = $em->getRepository("App\\Entity\\" . $className)->findOneById($id);
+        else  $entity = $em->getRepository("App\\Entity\\" . $className)->findOneBy(['portada' => 1, 'activo' => 1], ['id' => 'DESC']);
+
+        if ($entity) {
+            switch ($entity->getPosicion()) {
+                case 0:
+                    $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
+                    $ret['html'] .= '<p>' . $entity->getContenido();
+                    $ret['html'] .= '<img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="right"  style="padding: 5px">';
+                    $ret['html'] .=  '</p>';
+                    break;
+                
+                case 1:
+                    $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
+                    $ret['html'] .= '<p>' . $entity->getContenido();
+                    $ret['html'] .= '<img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="left"  style="padding: 5px">';
+                    $ret['html'] .=  '</p>';
+                    break;
+
+
+                case 2:                                                                                                                 $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
+                    $ret['html'] .= '<p>' . $entity->getContenido();
+                    $ret['html'] .= '<center><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></center>';
+                    $ret['html'] .=  '</p>';                             
+
+                    break;
+
+                case 3:
+                    $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
+                    $ret['html'] .= '<center><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></center>';
+                    $ret['html'] .= '<p>' . $entity->getContenido();
+                    $ret['html'] .=  '</p>'; 
+
+                    break;
+            }
+        }
+        else {
+            $ret['html'] = '';
+        }
+        return new JsonResponse($ret, 200);
+    }
 }

@@ -39,7 +39,15 @@ $(function() {
    slotLabelInterval: false,
    minTime: '{{ minTime }}',
    maxTime: '{{ maxTime }}',
-   displayEventTime : false
+   displayEventTime : false,
+   loading: function( isLoading, view ) {
+            if(isLoading) {// isLoading gives boolean value
+                console.info('loading');
+            } else {
+                $('.ajax-loader-{{ calendar }}').hide();
+            }
+        }
+    ,
   })
 });
 

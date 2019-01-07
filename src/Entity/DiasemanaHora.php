@@ -49,6 +49,12 @@ class DiasemanaHora
 
 
     /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $hhmm;
+
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $fin;
@@ -105,6 +111,18 @@ class DiasemanaHora
     public function setFin(\DateTimeInterface $fin): self
     {
         $this->fin = $fin;
+
+        return $this;
+    }
+
+    public function getHhmm(): ?\DateTimeInterface
+    {
+        return $this->hhmm;
+    }
+
+    public function setHhmm(\DateTimeInterface $hhmm): self
+    {
+        $this->hhmm = $hhmm;
 
         return $this;
     }

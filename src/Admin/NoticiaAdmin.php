@@ -79,7 +79,7 @@ final class NoticiaAdmin extends AbstractAdmin
 			->with('Foto', ['class' => 'col-xs-12 col-md-6'])
 			->add('fotolocation', FileType::class,['label' => 'Subir foto', 'mapped' => false, 'required' => false] )
 			->add('posicion', ChoiceType::class, ['label' => 'Posición de la foto', 'choices'=> array_flip(Noticia::getPosiciones()), 'required' => false])
-			->add('foto', ImageType::class, ['label' => false])
+			->add('photo', ImageType::class, ['label' => false, 'mapped'=>false, 'data' => $this->getSubject()->getFoto() ])
 			
 			->end()
 		;

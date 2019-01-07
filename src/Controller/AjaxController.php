@@ -38,7 +38,7 @@ class AjaxController extends AbstractController
     	$post = $request->request->all();
     	switch($post['tipo']) {
             case 'adorador': /// sólo una semana 
-                $ret = CalendarioManager::getAdoradoresDias($em, $post);
+                $ret = CalendarioManager::getAdoradoresDias($em, $post, true);
             break;
             case 'sacerdote': /// sólo una semana 
                 $ret = CalendarioManager::getSacerdotesDias($em, $post);
