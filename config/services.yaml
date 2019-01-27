@@ -67,14 +67,14 @@ services:
 
     admin.obispo:
         class: App\Admin\ObispoAdmin
-        arguments: [~, App\Entity\Nota, ~]
+        arguments: [~, App\Entity\Nota, App\Controller\CRUDController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: 'Peticiones del obispo' }
         public: true
 
     admin.peticion:
         class: App\Admin\PeticionAdmin
-        arguments: [~, App\Entity\Nota, ~]
+        arguments: [~, App\Entity\Nota, App\Controller\CRUDController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: 'Peticiones particulares' }
         public: true
@@ -82,7 +82,7 @@ services:
     
     admin.gracias:
         class: App\Admin\GraciasAdmin
-        arguments: [~, App\Entity\Nota, ~]
+        arguments: [~, App\Entity\Nota, App\Controller\CRUDController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: 'Acción de gracias' }
         public: true
@@ -92,4 +92,11 @@ services:
         arguments: [~, App\Entity\Noticia, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: 'Noticias' }
+        public: true
+
+    admin.frase:
+        class: App\Admin\FraseAdmin
+        arguments: [~, App\Entity\Frase, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Frase }
         public: true

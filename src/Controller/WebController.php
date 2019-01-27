@@ -47,8 +47,15 @@ class WebController extends AbstractController
         $now = new \DateTime('NOW');
         $data['mes'] = strtoupper($now->format('F'));
         $data['obispo'] =  $this->getQueryNotas([1])->getQuery()->getResult();
-        /// noticias
         $em = $this->getDoctrine()->getEntityManager();
+        /// frase
+        $frase = $em->getRepository("App\\Entity\\Frase")->findOneBy(["activa" => 1]);
+
+        if (!$frase)
+            $frase = $em->getRepository("App\\Entity\\Frase")->findOne();
+
+
+        /// noticias
         $qb = $em->createQueryBuilder();
         $qb->select('n')
                    ->from('App:Noticia', 'n')
@@ -60,6 +67,7 @@ class WebController extends AbstractController
         $data['noticias'] = $qb->getQuery()->getResult();
         $data['color0'] = Adorador::color0;
         $data['color1'] = Adorador::color1;
+        $data['frase'] = $frase;
         return $this->render('Web/index.html.twig',$data);
     }
 
@@ -73,7 +81,7 @@ class WebController extends AbstractController
         $post['id'] = 0;
         switch($post['tipo']) {
             case 'adorador':
-                $ret = CalendarioManager::getAdoradoresDias($em, $post);
+                $ret = CalendarioManager::getAdoradoresDias($em, $post, true);
             break;
             case 'sacerdote':
                 $ret = CalendarioManager::getSacerdotesDias($em, $post);

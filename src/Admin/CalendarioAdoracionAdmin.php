@@ -23,8 +23,10 @@ class CalendarioAdoracionAdmin extends UsuarioAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-         $collection->clearExcept('list');
+        $collection->clearExcept('list');
+        $collection->add('print','print');
     }
+
 
     public function getTipo() { return 1;}
     public function getColor() { 

@@ -56,6 +56,13 @@ sonata_admin:
                 icon: '<i class="fa fa-circle-o"></i>'
                 item:   admin.noticia
 
+            Frases:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-circle-o"></i>'
+                item:   admin.frase
+
 
     templates:
         layout: standard_layout.html.twig

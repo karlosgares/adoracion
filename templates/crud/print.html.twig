@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Imprimir</title>
+<link rel="stylesheet" href="/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bundles/sonatacore/vendor/components-font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ asset('bundles/app/css/print.css') }}">
+<script src="/bundles/sonatacore/vendor/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+<nav class="navbar">
+	<button onclick='window.print();' class='btn btn-default'>Imprimir</button>
+</nav>
+<center>
+<section class='section-{{ className }}' style='padding: 10px;'>
+{% if className == 'obispo' %}
+<h2 class='title-obispo'><ul>Intenciones de Mario Iceta</h2>
+<ol>
+{% for nota in results %}
+	<li>{{ nota.getTexto() }}</li>
+{% endfor %}
+</ol>
+{% elseif className == 'nota' %}
+<table width='100%' border='0'>
+{% for nota in results %}
+	{% if loop.index0 is divisible by(2) %}
+	<tr><td width='50%'  style='padding: 8px!important; vertical-align:top;'>{{ nota.getTexto() }}</td>
+	{% else %}
+	<td  style='padding: 8px!important; vertical-align:top;'>{{ nota.getTexto() }}</td></tr>
+	{% endif %}
+{% endfor %}
+</tr></table>
+{% elseif className == 'sacerdote' %}
+<table width='1500px' border="1">
+<thead>
+	<tr><td colspan='6'><center><h3>CONFESIONES CAPILLA ADORACIÓN PERPETUA</h3><br />
+	<b>Iglesia del Carmen. Simón Bolivar 4. BILBAO</b></center></td>
+	<td colspan='2'><center>{{ rangofechas }}</center></td></tr>
+	<tr class='fila-2'>
+		<td width="70px">HORAS</td><TD>LUNES</TD><TD>MARTES</TD><TD>MIÉRCOLES</TD>
+		<TD>JUEVES</TD><TD>VIERNES</TD><TD>SÁBADO</TD><TD>DOMINGO</TD>
+	</tr>
+</thead>
+<tbody>
+{% for i in 7..23 %}
+<tr>
+<td>{{ i }}h-{{ i+1 }}h</td>
+	{% for j in 1..7 %}
+	{% if j == 7 %}
+	{% set j2 = i %} {# domingo #}
+	{% else %}
+	{% set j2 = (100 * j) + i %}
+	{% endif %}
+	<td>
+		{% if result[j2] is defined %}
+			{{ result[j2]['title'] }}
+		{% endif %}
+	</td>
+	{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+</section>
+</center>
+</body>
+</html>

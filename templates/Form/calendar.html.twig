@@ -59,7 +59,7 @@ $(function() {
    maxTime: '{{ maxTime }}',
    loading: function( isLoading, view ) {
             if(isLoading) {// isLoading gives boolean value
-                console.info('loading');
+                $('.ajax-loader').show();
             } else {
                 $('.ajax-loader').hide();
             }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -20,7 +19,7 @@ abstract class NotaAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-			->add('fecha')
+			->add('fecha','doctrine_orm_date_range', ['label'=> 'Fecha'], [], DatePickerType::class)
             ->add('valida')
 			;
     }
@@ -84,8 +83,25 @@ abstract class NotaAdmin extends AbstractAdmin
         return $query;
     }
 
+    public function configureActionButtons($action, $object = null) {
+        $list = parent::configureActionButtons($action, $object);
+        $list['print'] = [
+                // NEXT_MAJOR: Remove this line and use commented line below it instead
+                'template' => 'crud/button_print.html.twig',
+                // 'template' => $this->getTemplateRegistry()->getTemplate('button_list'),
+        ];
+
+        return $list;
+    }
+
+    public function getClassPrint() {
+        return "nota";
+    }
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('show');
+        $collection->add('print','print');
     }
+    
 }

@@ -32,8 +32,10 @@ abstract class CalendarioManager {
                 if ($id == 0) {
                     
                     if ($entity->getBaja()) continue;
-                        
+                       
                     $idx = $start->format('Y-m-d') . $dia->getHora()->format('H:i');
+                    
+
                     if (!array_key_exists($idx, $arrDay))
                             $arrDay[$idx] = 1;
                     else    $arrDay[$idx]++;
@@ -59,7 +61,7 @@ abstract class CalendarioManager {
         return $ret;
     }
 
-    public static function getSacerdotesDias($em, $post) {
+    public static function getSacerdotesDias($em, $post, $bPrint = false) {
         $ret = [];
         $id = $post['id'];
         $className = ucfirst($post['tipo']);
@@ -88,7 +90,8 @@ abstract class CalendarioManager {
         foreach ($rst as $dia) {
             $hora = $dia['hora'];
             $fin= $dia['fin'];
-            $idx = $hora->format('Y-m-dH:i');
+            if($bPrint) $idx = $hora->format('w') * 100 +  $hora->format('H');
+            else  $idx = $hora->format('Y-m-dH:i');
             $color = Sacerdote::color;
             $title = $dia['nombre'];
             $iddia = $dia['id'];

@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
+use Sonata\AdminBundle\Route\RouteCollection;
 
 final class ObispoAdmin extends NotaAdmin
 {
@@ -28,5 +28,9 @@ final class ObispoAdmin extends NotaAdmin
 
     public function getTipo() {
         return 1;
+    }
+
+    public function getClassPrint() {
+        return "obispo";
     }
 }

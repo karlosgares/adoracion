@@ -5,6 +5,7 @@ $(function() {
 
   // page is now ready, initialize the ..
   $('#{{ calendar }}').fullCalendar({
+  height: {{ calendarHeight }},
 	header: {
 	    left: '',
 	    center: 'title',
@@ -42,7 +43,7 @@ $(function() {
    displayEventTime : false,
    loading: function( isLoading, view ) {
             if(isLoading) {// isLoading gives boolean value
-                console.info('loading');
+                 $('.ajax-loader-{{ calendar }}').show();
             } else {
                 $('.ajax-loader-{{ calendar }}').hide();
             }

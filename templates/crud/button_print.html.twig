@@ -1,0 +1,24 @@
+<li>
+    <a class="sonata-action-element" href="javascript:void(0);" onclick="printForm()">
+        <i class="fa fa-print" aria-hidden="true"></i>
+        {{ 'Imprimir'|trans({}, 'SonataAdminBundle') }}
+    </a>
+</li>
+<script>
+function printForm() {
+	if ($(".sonata-filter-form").length > 0) {
+		var action = $(".sonata-filter-form").action;
+		$(".sonata-filter-form").attr('action','{{ admin.generateUrl("print") }}')
+		$(".sonata-filter-form").attr('target','_blank');
+		
+		$(".sonata-filter-form").submit();
+		$(".sonata-filter-form").attr('action',action);
+		$(".sonata-filter-form").attr('target','_self');
+	}
+	else {
+		window.open('{{ admin.generateUrl("print") }}?start=' + $(".fc-mon").attr('data-date') + '&end=' + $(".fc-sun").attr('data-date'))
+	}
+	
+}
+
+</script>
