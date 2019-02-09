@@ -1,12 +1,17 @@
 <!doctype html>
 <html lang="es">
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="Adoración Perpetua BILBAO">
+<meta name="keywords" content="Adoración, Jesús, 24 horas, Bilbao, Indautxu, Perpetua, Rezar, Orar, Adoradores">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+{% set headerCss = 'bundles/app/css/header' ~ version ~ '.css' %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('bundles/app/css/web.css') }}">
+<link rel="stylesheet" href="{{ asset(headerCss) }}">
 <link rel="stylesheet" href="{{ asset('bundles/app/css/fullcalendar.min.css') }}">
- <link rel="stylesheet" href=https://openlayers.org/en/v4.6.5/css/ol.css"/>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -30,8 +35,8 @@
 	<header class="">
 		<div class="container-fluid d-none d-md-block head">
 			<div class='row'>
-				<div class='col-md-8'>
-					<img src="{{ asset('bundles/app/img/papa3.jpg') }}" class='rounded-circle'>
+				<div class='col-md-4'>
+					<img src="{{ asset('bundles/app/img/papa3.jpg') }}" class='papa rounded'>
 				</div>
 				<div class='col-md-4 pull-right'>
 					<div class='main-title'>
@@ -40,14 +45,16 @@
 						Capilla de Adoración perpetua Bilbao
 					</div>
 				</div>
+				<div class='col-md-4 text-right'>
+					<img src="{{ asset('bundles/app/img/obispo.jpg') }}" class='rounded'>
+				</div>
 			</div>
 		</div>
-		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     			<span class="navbar-toggler-icon"></span>
   				</button>
-  			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+  				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 	  				<ul class="navbar-nav mr-auto sf-menu">
 						<li  class="current"><a href='javascript:void(0)' onClick="javascript:goto(this,'home');">Inicio</a></li>
 						<li><a href='javascript:void(0)' onClick="javascript:goto(this,'noticias');">Noticias</a></li>
@@ -58,5 +65,4 @@
 				</div>
 				<div class="pull-right"></div>
 			</nav>
-		</div>
 	</header>

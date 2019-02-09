@@ -47,8 +47,8 @@ abstract class NotaAdmin extends AbstractAdmin
         }
         else {
             $now = new \DateTime('NOW');
-            $now->add(new \DateInterval('P1M'));
-            $this->getSubject()->setFecha(new \DateTime($now->format('Y-m-1')));
+            $mes = $now->format('m') + 1;
+            $this->getSubject()->setFecha(new \DateTime($now->format('Y-' . $mes . '-1')));
             $this->getSubject()->setValida(true);
         }
 

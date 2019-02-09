@@ -23,9 +23,9 @@ class WebController extends AbstractController
         $em = $this->getDoctrine()->getEntityManager();
         $post = $request->request->all();
         $now = new \DateTime('NOW');
-        $now->add(new \DateInterval('P1M'));
+        $mes = $now->format('m') + 1;
         $nota = new Nota();
-        $nota->setFecha(new \DateTime($now->format('Y-m-1')));
+        $nota->setFecha(new \DateTime($now->format('Y-' . $mes . '-1')));
         $nota->setTipo($post['tiponota']);
         $nota->setTexto($post['textonota']);
         $nota->setValida(false);
@@ -68,7 +68,8 @@ class WebController extends AbstractController
         $data['color0'] = Adorador::color0;
         $data['color1'] = Adorador::color1;
         $data['frase'] = $frase;
-        return $this->render('Web/index.html.twig',$data);
+        $data['version'] = (isset($_GET['version']))?$_GET['version']:1;
+        return $this->render('web/index.html.twig',$data);
     }
 
     /**
@@ -125,10 +126,12 @@ class WebController extends AbstractController
                    ->orderBy('n.fechaalta','desc')
         ;
         $noticias = "";
+        $bFirst = false;
         foreach ($qb->getQuery()->getResult() as $nota) {
             $noticias .= '<li class="list-group-item"><a href="web/noticia/'. $nota->getId() .'" class="list-noticia">'.$nota->getTitulo().'</a></li>';
         }
         $ret['noticias'] = $noticias;
+        $ret['noticias'] = $noticia;
         return new JsonResponse($ret, 200);
     }
 
@@ -181,25 +184,28 @@ class WebController extends AbstractController
                 $entity = $em->getRepository("App\\Entity\\" . $className)->findOneById($id);
         else  $entity = $em->getRepository("App\\Entity\\" . $className)->findOneBy(['portada' => 1, 'activo' => 1], ['id' => 'DESC']);
 
+        if (!$entity)
+            $entity = $em->getRepository("App\\Entity\\" . $className)->findOneBy(['activo' => 1], ['id' => 'DESC']);
+
         if ($entity) {
             switch ($entity->getPosicion()) {
                 case 0:
                     $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
-                    $ret['html'] .= '<p>' . $entity->getContenido();
+                    $ret['html'] .= '<p>' .nl2br($entity->getContenido());
                     $ret['html'] .= '<img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="right"  style="padding: 5px">';
                     $ret['html'] .=  '</p>';
                     break;
                 
                 case 1:
                     $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
-                    $ret['html'] .= '<p>' . $entity->getContenido();
+                    $ret['html'] .= '<p>' . nl2br($entity->getContenido());
                     $ret['html'] .= '<img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="left"  style="padding: 5px">';
                     $ret['html'] .=  '</p>';
                     break;
 
 
-                case 2:                                                                                                                 $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
-                    $ret['html'] .= '<p>' . $entity->getContenido();
+                case 2:                                                                                 $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
+                    $ret['html'] .= '<p>' . nl2br($entity->getContenido());
                     $ret['html'] .= '<center><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></center>';
                     $ret['html'] .=  '</p>';                             
 
