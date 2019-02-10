@@ -49,42 +49,41 @@ class DiasemanaHoraRepository extends ServiceEntityRepository
     */
 
     public function activarSemana($tipo = 0) {
-        $start = new \DateTime('NOW');
-        $rst =  $this->createQueryBuilder('d')
-            ->where('d.hora >= :start')
-            ->andWhere('d.tipo = :tipo')
-            ->setParameter('start', $start)
-            ->setParameter('tipo', $tipo)
-            ->getQuery()
-            ->getResult();
         
-        if (count($rst) == 0) {
-            $last = clone $start;
-            $last->sub(new \DateInterval("P7D"));
+
             $em = $this->getEntityManager();
 
-            $sql = "INSERT INTO diasemana_hora(dayofweek, hora, tipo, fin, idcopia)
-            SELECT dayofweek, DATE_ADD(hora, INTERVAL 7 DAY), tipo,  DATE_ADD(fin, INTERVAL 7 DAY), id FROM diasemana_hora WHERE hora >=:hora and tipo=:tipo";
+            for ($i=1; $i < 52; $i++) {
+                $sql = "INSERT INTO diasemana_hora(dayofweek, hora, tipo, fin, idcopia)
+                SELECT dayofweek, DATE_ADD(hora, INTERVAL " . 7 * $i . " DAY), tipo,  DATE_ADD(fin, INTERVAL  " . 7 * $i . " DAY), id  FROM diasemana_hora WHERE tipo = 0 and hora BETWEEN  '2019-01-28' AND '2019-02-04'";
 
-            $stmt = $em->getConnection()->prepare($sql);
-            $stmt->bindValue(':hora', $last->format('Y-m-d 00:00:00'));
-            $stmt->bindValue(':tipo', $tipo);
-            $result = $stmt->execute();
-
-            
-
-            if ($tipo == 0) {
-                 $sql = "INSERT INTO sacerdote_diasemana_hora(sacerdote_id, diasemana_hora_id)
-                SELECT s.sacerdote_id, d.id  FROM sacerdote_diasemana_hora s INNER JOIN  diasemana_hora d on s.diasemana_hora_id = d.idcopia
-                 WHERE hora >=:hora and tipo=:tipo";
-
-                $stmt = $em->getConnection()->prepare($sql);
-                $stmt->bindValue(':hora', $last->format('Y-m-d 00:00:00'));
-                $stmt->bindValue(':tipo', $tipo);
-                $result = $stmt->execute();
+                    $stmt = $em->getConnection()->prepare($sql);
+                    $result = $stmt->execute();
             }
+            
+             $sql = "INSERT INTO sacerdote_diasemana_hora(sacerdote_id, diasemana_hora_id) SELECT DISTINCT s.sacerdote_id, d.id  FROM sacerdote_diasemana_hora s INNER JOIN  diasemana_hora d on s.diasemana_hora_id = d.idcopia WHERE tipo = 0 and hora  >= '2019-02-04'";
+                    $stmt = $em->getConnection()->prepare($sql);
+                    $result = $stmt->execute();
 
-        }
+            /**
+BEGIN
+ set @v1 = 1;
+
+ WHILE @v1 < 50 DO
+    
+    INSERT INTO diasemana_hora(dayofweek, hora, tipo, fin, idcopia)
+            SELECT dayofweek, DATE_ADD(hora, INTERVAL 7 * v1 DAY), tipo,  DATE_ADD(fin, INTERVAL 7 * v1 DAY), id WHERE tipo = 0 and hora BETWEEN  '2019-01-28' AND '2019-02-04';
+            
+            
+     INSERT INTO sacerdote_diasemana_hora(sacerdote_id, diasemana_hora_id)
+                SELECT s.sacerdote_id, d.id  FROM sacerdote_diasemana_hora s INNER JOIN  diasemana_hora d on s.diasemana_hora_id = d.idcopia
+                 WHERE tipo = 0 and hora BETWEEN  '2019-01-28' AND '2019-02-04';
+ 
+    SET v1 = v1 + 1;
+    
+ END WHILE;
+
+            */
 
         return true;
     }

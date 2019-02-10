@@ -35,7 +35,7 @@ class Sacerdote
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $telefono;
 

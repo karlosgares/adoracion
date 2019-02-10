@@ -77,7 +77,10 @@ class AjaxController extends AbstractController
 			$entity->addDiasemanahora($d);
 			$em->flush();
 			$ret['id'] = $d->getId();
-			$ret['title'] = '';
+			$ret['title'] = $entity->getNombre();
+            $ret['backgroundColor'] = $entity->getColor();
+            $ret['start'] =  sprintf('%sT%s', $date->format('Y-m-d'),$d->getHora()->format('H:i:s'));
+            $ret["end"] = sprintf('%sT%s', $date->format('Y-m-d'),$d->getFin()->format('H:i:s'));
 		}
 		else {
 			$status = 400;

@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
 					{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00', 'calendarHeight': 670, 'headerRight': '' } %}
-					<div class="card">
+					<div class="card card-adoradores">
 						<div class="card-header">
 						<i class="fa fa-calendar" aria-hidden="true"></i> Adoradores&nbsp;&nbsp;
 						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-adorador text-right'>
@@ -21,7 +21,7 @@
 								<span class='tag-adorador' style="background-color:{{ color1 }}">&nbsp;&nbsp;&nbsp;</span>&nbsp;Más de un adorador</div>
 							</div>
 						 </div>
-						{% include 'Web/calendar.html.twig' with vars %}
+						{% include 'web/calendar.html.twig' with vars %}
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6">
@@ -32,7 +32,7 @@
 					  	</div>
 					  	<div class="card-body">
 					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 550, 'headerRight': 'prev,next' } %}
-						{% include 'Web/calendar.html.twig' with vars %}
+						{% include 'web/calendar.html.twig' with vars %}
 					  	</div>
 					</div>
 					<div class='clear'></div>	

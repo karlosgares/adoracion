@@ -68,7 +68,7 @@ class WebController extends AbstractController
         $data['color0'] = Adorador::color0;
         $data['color1'] = Adorador::color1;
         $data['frase'] = $frase;
-        $data['version'] = (isset($_GET['version']))?$_GET['version']:1;
+        $data['version'] = (isset($_GET['version']))?$_GET['version']:4;
         return $this->render('web/index.html.twig',$data);
     }
 
@@ -150,7 +150,7 @@ class WebController extends AbstractController
         else {
             $data['msgError'] = "No existe la noticia";
         }
-        return $this->render('Web/noticia.html.twig',$data);
+        return $this->render('web/noticia.html.twig',$data);
     }
 
     public function getQueryNotas($arr) {

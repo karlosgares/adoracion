@@ -19,34 +19,34 @@
 <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.min.js') }}""></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script src="/bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.min.js"></script>
-<script src="/bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js"></script>
-<script src="/bundles/sonataadmin/vendor/jqueryui/ui/minified/i18n/jquery-ui-i18n.min.js"></script>
-<script src="/bundles/sonatacore/vendor/moment/min/moment.min.js"></script>
-<script src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>  
+<script src="{{ asset('bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.min.js') }}"></script>
+<script src="{{ asset('bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('bundles/sonataadmin/vendor/jqueryui/ui/minified/i18n/jquery-ui-i18n.min.js') }}"></script>
+<script src="{{ asset('bundles/sonatacore/vendor/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>  
 
 <script src="{{ asset('bundles/app/js/fullcalendar.js') }}"></script>
 <script src="{{ asset('bundles/app/js/es.js') }}"></script>
 <script src="{{ asset('bundles/app/js/web.js') }}"></script>
-<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
 <title>Adoración Perpetua BILBAO</title>
 </head>
 <body>
 	<header class="">
 		<div class="container-fluid d-none d-md-block head">
 			<div class='row'>
-				<div class='col-md-4'>
-					<img src="{{ asset('bundles/app/img/papa3.jpg') }}" class='papa rounded'>
+				<div class='col-md-3' style="padding-left: 0px!important">
+					<img src="{{ asset('bundles/app/img/papa3.jpg') }}" class=''>
 				</div>
-				<div class='col-md-4 pull-right'>
+				<div class='col-md-6 head-center text-right'>
 					<div class='main-title'>
 						El Señor te espera:<br />
-						<i>Las 24h de los 365 días del año.</i><br />
-						Capilla de Adoración perpetua Bilbao
+						<i>Las 24h los 365 días del año.</i><br />
+						Capilla de Adoración perpetua<br>
+						Bilbao
 					</div>
 				</div>
-				<div class='col-md-4 text-right'>
-					<img src="{{ asset('bundles/app/img/obispo.jpg') }}" class='rounded'>
+				<div class='col-md-3 text-right' style="padding-right: 0px!important">
+					<img src="{{ asset('bundles/app/img/obispo.jpg') }}" class=''>
 				</div>
 			</div>
 		</div>
