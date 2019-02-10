@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sacerdote
 {   
-    const color = "#AAAAFF";
+    const color = "#AACA31";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
