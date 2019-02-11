@@ -38,7 +38,14 @@ class UsuarioAdmin extends AbstractAdmin
         ;    
         
         if ($this->getSubject() instanceOf \App\Entity\Adorador) {
-            $formMapper->add('sustitucionfranja', ChoiceType::class, ['label'=> 'Franja horaria de sustituto', 'required'=>false, 'choices'=>array_flip(Adorador::getSustitucionfranjas()), 'placeholder'=> 'Elegir para sustitutos'])
+            
+            $formMapper
+                ->add('movil', TextType::class, ['required'=>false, 'label'=> 'Móvil'])
+                ->add('responsable', TextType::class, ['required'=>false])
+                ->add('direccion', TextType::class, ['required'=>false, 'label'=> 'Dirección'])
+                ->add('cp', TextType::class, ['required'=>false, 'label'=> 'CP'])
+                ->add('poblacion', TextType::class, ['required'=>false, 'label'=> 'Población'])
+                ->add('sustitucionfranja', ChoiceType::class, ['label'=> 'Franja horaria de sustituto', 'required'=>false, 'choices'=>array_flip(Adorador::getSustitucionfranjas()), 'placeholder'=> 'Elegir para sustitutos'])
                 ->add('baja')
 
             ;
