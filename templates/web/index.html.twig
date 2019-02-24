@@ -25,6 +25,7 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6">
+				    <div class='clear d-block d-sm-none'></div>
 					<div class="card">
 						<div class="card-header">
 						   <i class="fas fa-calendar-plus"></i> Confesiones&nbsp;&nbsp;
@@ -70,6 +71,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-6">
 				  	{% if frase is defined %}
+					<div class='clear d-block d-sm-none'></div>
 					<div class="card">
 						<div class="card-header">
 						 <i class="fa fa-comment" aria-hidden="true"></i> Frase
@@ -170,11 +172,16 @@
 			</section>
 			<section id="section-oracion" class="section" data-loaded="0" style="display:none;">
 				<h4 class="h-title">Oraciones</h4>
+				<div class="row d-md-none">
+				<div class="col-xs-12"><a class="btn btn-outline-success btn-sm" href="#adorote">Adoro te devote</a>
+				<a class="btn btn-outline-success btn-sm" href="#tedeum">Te Deum</a>
+				<a class="btn btn-outline-success btn-sm" href="#quebien">Qué bien se está contigo</a>
+				</div></div>
 				<div class='row'>
 					<div class="col-xs-12 col-md-4">
 						<div class="card">
 							<div class="card-header">
-								Adoro te devote
+								<a id="adorote"></a>Adoro te devote
 							</div>
 							<div class="card-body">
 								Te adoro con devoción, Dios escondido,<br /> 
@@ -203,7 +210,7 @@
 					<div class="col-xs-12 col-md-4">
 						<div class="card">
 							<div class="card-header">
-								Te Deum
+								<a id="tedeum"></a>Te Deum
 							</div>
 							<div class="card-body">
 								A Ti, oh Dios, te alabamos,<br /> 
@@ -276,7 +283,7 @@
 					<div class="col-xs-12 col-md-4">
 						<div class="card">
 							<div class="card-header">
-								Qué bien se está contigo, Señor
+								<a id="quebien"></a>Qué bien se está contigo, Señor
 							</div>
 							<div class="card-body">
 								¡Qué bien se está contigo, Señor, junto al Sagrario! <br />
