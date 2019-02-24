@@ -9,8 +9,8 @@
 					{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00', 'calendarHeight': 670, 'headerRight': '' } %}
 					<div class="card card-adoradores">
 						<div class="card-header">
-						<i class="fa fa-calendar" aria-hidden="true"></i> Adoradores&nbsp;&nbsp;
-						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-adorador text-right'>
+						<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp; Adoradores&nbsp;&nbsp;
+						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-adorador float-right'>
 						</div>
 						<div class="card-body">
 						 <div class="row">
@@ -28,8 +28,8 @@
 				    <div class='clear d-block d-sm-none'></div>
 					<div class="card">
 						<div class="card-header">
-						   <i class="fas fa-calendar-plus"></i> Confesiones&nbsp;&nbsp;
-						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote text-right'>
+						   <i class="fas fa-calendar-plus"></i>&nbsp;&nbsp; Confesiones&nbsp;&nbsp;
+						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote float-right'>
 					  	</div>
 					  	<div class="card-body">
 					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 500, 'headerRight': 'prev,next' } %}
@@ -39,7 +39,7 @@
 					<div class='clear'></div>	
 					<div class="card">
 						<div class="card-header">
-						   <i class="fas fa-newspaper"></i> Noticias
+						   <i class="fas fa-newspaper"></i>&nbsp;&nbsp;Noticias
 					  	</div>
 					  	<div class="card-body">
 							<div id="carouselNoticias" class="carousel slide" data-ride="carousel">
@@ -58,7 +58,7 @@
 				<div class="col-xs-12 col-sm-6">
 					<div class="card">
 						<div class="card-header">
-						 <i class="fas fa-pray" aria-hidden="true"></i> Intenciones del mes de Don Marío Iceta
+						 <i class="fas fa-pray" aria-hidden="true"></i>&nbsp;&nbsp;Intenciones del mes de Don Marío Iceta
 						</div>
 					  	<div class="card-body">
 					    	<ol id="lista-nota-1">
@@ -74,7 +74,7 @@
 					<div class='clear d-block d-sm-none'></div>
 					<div class="card">
 						<div class="card-header">
-						 <i class="fa fa-comment" aria-hidden="true"></i> Frase
+						 <i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;Frase
 						</div>
 					  	<div class="card-body">
 					    	<p>{{ frase.getTexto() }}</p>
@@ -91,7 +91,7 @@
 				<div class="col-xs-12 col-sm-6">	
 					<div class="card">
 						<div class="card-header">
-							<i class="fas fa-home"></i><a id="contacto"></a> Contacto
+							<i class="fas fa-home"></i><a id="contacto"></a>&nbsp;&nbsp;Contacto
 						</div>
 						<div class="card-body">
 							<div style='padding-left:25px'>
@@ -122,7 +122,7 @@
 					</div>
 					<div class="col-xs-12 col-md-6">
 						<div class="card">
-							<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia text-right' style='display: none;'></div>
+							<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia float-right' style='display: none;'></div>
 							<div class="card-body" id='noticia'></div>
 						</div>
 					</div>
@@ -136,7 +136,7 @@
 						<div class="card">
 						  <div class="card-header">
 						    <div class='row'>
-							  	<div class='col-sm-10'><i class="fas fa-pray"></i> Intenciones&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-2 text-right'></div><div class='col-sm-2 text-right'>
+							  	<div class='col-sm-10'><i class="fas fa-pray"></i> Intenciones&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-2 float-right'></div><div class='col-sm-2 text-right'>
 						    <button class='btn btn btn-light btn-sm' onclick='AbrirModal(2)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button>
 						  		</div>
 						  	</div>
@@ -152,7 +152,7 @@
 							  	<div class='row'>
 							  		<div class='col-sm-10'>
 							    <i class="fas fa-praying-hands"></i> Acción de gracias
-							    	&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-3 text-right'>
+							    	&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-3 float-right'>
 							    </div>
 							    	<div class='col-sm-2 text-right'><button class='btn btn btn-light btn-sm' onclick='AbrirModal(3)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button></div></div>
 							  </div>
