@@ -85,11 +85,13 @@ abstract class NotaAdmin extends AbstractAdmin
 
     public function configureActionButtons($action, $object = null) {
         $list = parent::configureActionButtons($action, $object);
-        $list['print'] = [
-                // NEXT_MAJOR: Remove this line and use commented line below it instead
-                'template' => 'crud/button_print.html.twig',
-                // 'template' => $this->getTemplateRegistry()->getTemplate('button_list'),
-        ];
+        if ($action == "list") {
+            $list['print'] = [
+                    // NEXT_MAJOR: Remove this line and use commented line below it instead
+                    'template' => 'crud/button_print.html.twig',
+                    // 'template' => $this->getTemplateRegistry()->getTemplate('button_list'),
+            ];
+        }
 
         return $list;
     }

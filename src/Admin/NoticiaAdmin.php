@@ -38,7 +38,7 @@ final class NoticiaAdmin extends AbstractAdmin
 			->add('activo')
 			->add('_action', null, [
                 'actions' => [
-                    'show' => [],
+                    'show' => ['template' => 'button/print.html.twig'],
                     'edit' => [],
                     'delete' => [],
                 ],
