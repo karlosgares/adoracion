@@ -77,7 +77,8 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "3.4.*"
+            "require": "3.4.*",
+            "public-dir": "public_html"
         }
     }
 }

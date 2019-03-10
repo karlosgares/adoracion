@@ -1,15 +1,16 @@
-{% include 'web/header.html.twig' %}	
-	<div class="bg1">
-		<div class="container-fluid">
+{% set vars = {'version': version} %}
+{% include 'web/header.html.twig' with vars %}
+
+		<div class="container-fluid body-back">
 			<section id="section-home" class="section" data-loaded="0">
 			<h4 class="h-title">Inicio</h4>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
 					{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00', 'calendarHeight': 670, 'headerRight': '' } %}
-					<div class="card">
+					<div class="card card-adoradores">
 						<div class="card-header">
-						<i class="fa fa-calendar" aria-hidden="true"></i> Adoradores&nbsp;&nbsp;
-						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-adorador text-right'>
+						<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp; Adoradores&nbsp;&nbsp;
+						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-adorador float-right'>
 						</div>
 						<div class="card-body">
 						 <div class="row">
@@ -20,60 +21,25 @@
 								<span class='tag-adorador' style="background-color:{{ color1 }}">&nbsp;&nbsp;&nbsp;</span>&nbsp;Más de un adorador</div>
 							</div>
 						 </div>
-						{% include 'Web/calendar.html.twig' with vars %}
+						{% include 'web/calendar.html.twig' with vars %}
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6">
+				    <div class='clear d-block d-sm-none'></div>
 					<div class="card">
 						<div class="card-header">
-						   <i class="fas fa-calendar-plus"></i> Confesiones&nbsp;&nbsp;
-						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote text-right'>
+						   <i class="fas fa-calendar-plus"></i>&nbsp;&nbsp; Confesiones&nbsp;&nbsp;
+						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote float-right'>
 					  	</div>
 					  	<div class="card-body">
-					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 550, 'headerRight': 'prev,next' } %}
-						{% include 'Web/calendar.html.twig' with vars %}
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 500, 'headerRight': 'prev,next' } %}
+						{% include 'web/calendar.html.twig' with vars %}
 					  	</div>
 					</div>
-				</div>
-			</div>
-			<div class='clear'></div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6">
+					<div class='clear'></div>	
 					<div class="card">
 						<div class="card-header">
-						 <i class="fas fa-pray" aria-hidden="true"></i> Intenciones del mes de Don Marío Iceta
-						</div>
-					  	<div class="card-body">
-					    	<ol id="lista-nota-1">
-					    		{% for nota in obispo %}
-					    		<li>{{ nota.getTexto() }}</li>	
-					    		{% endfor %}
-					    	</ol>
-					  	</div>
-				  	</div>
-				</div>
-				<div class="col-xs-12 col-sm-6">
-				  	{% if frase is defined %}
-					<div class="card">
-						<div class="card-header">
-						 <i class="fa fa-comment" aria-hidden="true"></i> Frase
-						</div>
-					  	<div class="card-body">
-					    	<p>{{ frase.getTexto() }}</p>
-					    	{% if frase.getAutor() != '' %}
-					    	<span class='text-right autor'>{{ frase.getAutor() }}</span>
-					    	{% endif %}
-					  	</div>
-				  	</div>
-				  	{% endif %}
-				</div>
-			</div>
-			<div class='clear'></div>
-			<div class='row'>
-				<div class="col-xs-12 col-sm-6">		
-					<div class="card">
-						<div class="card-header">
-						   <i class="fas fa-newspaper"></i> Noticias
+						   <i class="fas fa-newspaper"></i>&nbsp;&nbsp;Noticias
 					  	</div>
 					  	<div class="card-body">
 							<div id="carouselNoticias" class="carousel slide" data-ride="carousel">
@@ -88,29 +54,57 @@
 				</div>
 			</div>
 			<div class='clear'></div>
-			<div class='row'>
-				<div class="col-xs-12 col-md-12">	
+			<div class="row">
+				<div class="col-xs-12 col-sm-6">
 					<div class="card">
 						<div class="card-header">
-						<i class="fas fa-home"></i><a id="contacto"></a> Contacto</div>
-						<div class="card-body">
-							<div class='row'>
-								<div class='col-xs-12 col-md-6'>
-									<info class='text-center'><i class='fa fa-phone'></i> 606 770 181<br />
-									<i class="far fa-envelope"></i> adoracionperpetua.bilbao@gmail.com<br />
-									<i class="fas fa-church"></i> Parroquia de Nuestra Señora del Carmen.<br /> Calle Simón Bolívar, 4 CP 48010 Bilbao</info>
-								</div>
-								<div class='col-xs-12 col-md-7'>
-									<div id="mapid"></div>
-								</div>
-							</div>
+						 <i class="fas fa-pray" aria-hidden="true"></i>&nbsp;&nbsp;Intenciones del mes de Don Marío Iceta
 						</div>
+					  	<div class="card-body">
+					    	<ol id="lista-nota-1">
+					    		{% for nota in obispo %}
+					    		<li>{{ nota.getTexto() }}</li>	
+					    		{% endfor %}
+					    	</ol>
+					  	</div>
+				  	</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+				  	{% if frase is defined %}
+					<div class='clear d-block d-sm-none'></div>
+					<div class="card">
+						<div class="card-header">
+						 <i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;Frase
+						</div>
+					  	<div class="card-body">
+					    	<p>{{ frase.getTexto() }}</p>
+					    	{% if frase.getAutor() != '' %}
+					    	<span class='text-right autor'>{{ frase.getAutor() }}</span>
+					    	{% endif %}
+					  	</div>
+				  	</div>
+				  	{% endif %}
+				</div>
+			</div>
+			<div class='clear'></div>
+			<div class='row'>
+				<div class="col-xs-12 col-sm-6">	
+					<div class="card">
+						<div class="card-header">
+							<i class="fas fa-home"></i><a id="contacto"></a>&nbsp;&nbsp;Contacto
+						</div>
+						<div class="card-body">
+							<div style='padding-left:25px'>
+								<i class='fa fa-phone'></i> 606 770 181<br />
+								<i class="far fa-envelope"></i> <a href="mailto:adoracionperpetua.bilbao@gmail.com">adoracionperpetua.bilbao@gmail.com</a><br />
+								<i class="fas fa-church"></i> Parroquia de Nuestra Señora del Carmen.<br /><a href="https://www.google.com/maps/place/Calle+Sim%C3%B3n+Bol%C3%ADvar,+4,+48010+Bilbao,+Vizcaya/@43.2599642,-2.9432837,17z/data=!3m1!4b1!4m5!3m4!1s0xd4e5029190d7de7:0x5eb073ce9bad633e!8m2!3d43.2599642!4d-2.941095" target='_blank'>Calle Simón Bolívar, 4 CP 48010 Bilbao</a><br />
+							</div>
+						</div
 					</div>
 				</div>
 			</div>	
 			</section>
-			
-			<div class="container-fluid">
+
 			<section id="section-noticias" class="section" data-loaded="0" style="display:none;">
 				<h4 class="h-title">Noticias</h4>
 				<div class='row'>
@@ -118,6 +112,7 @@
 						<div class="card">
 							<div class="card-body">
 								<ul id="list-noticias">
+								  {% set fst = false %}
 								  {% for nota in noticias %}
 								  <li>{{ nota.getFechaalta()|date("d-m-Y") }} - <a href="javascript:getNoticia('{{ path('app_web_getnoticia') }}',{{ nota.getId() }}) " class="list-noticia">{{ nota.getTitulo() }}</a></li>
 								  {% endfor %}
@@ -127,7 +122,7 @@
 					</div>
 					<div class="col-xs-12 col-md-6">
 						<div class="card">
-							<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia text-right' style='display: none;'></div>
+							<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia float-right' style='display: none;'></div>
 							<div class="card-body" id='noticia'></div>
 						</div>
 					</div>
@@ -141,8 +136,8 @@
 						<div class="card">
 						  <div class="card-header">
 						    <div class='row'>
-							  	<div class='col-sm-10'><i class="fas fa-pray"></i> Intenciones&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-2 text-right'></div><div class='col-sm-2 text-right'>
-						    <button class='btn btn btn-light btn-sm' onclick='AbrirModal(2)' data-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+							  	<div class='col-sm-10'><i class="fas fa-pray"></i> Intenciones&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-2 float-right'></div><div class='col-sm-2 text-right'>
+						    <button class='btn btn btn-light btn-sm' onclick='AbrirModal(2)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button>
 						  		</div>
 						  	</div>
 						  </div>
@@ -157,25 +152,38 @@
 							  	<div class='row'>
 							  		<div class='col-sm-10'>
 							    <i class="fas fa-praying-hands"></i> Acción de gracias
-							    	&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-3 text-right'>
+							    	&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-3 float-right'>
 							    </div>
-							    	<div class='col-sm-2 text-right'><button class='btn btn btn-light btn-sm' onclick='AbrirModal(3)' data-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></div></div>
+							    	<div class='col-sm-2 text-right'><button class='btn btn btn-light btn-sm' onclick='AbrirModal(3)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button></div></div>
 							  </div>
 							  <div class="card-body">
 									<ul id="lista-nota-3"></ul>
 							  </div>
-							</div>
 						</div>
+					</div>
+				</div>
+				<div class='clear'></div>
+				<div class='row'>
+					<div class='col-12'>
+						<div class='alert alert-info text-center' role='alert'>Escribe tu propia petición o acción de gracias pinchando en <i class="fas fa-edit"></i>. No se guarda nigún dato personal, ni se usa caché.</div>
+
 					</div>
 				</div>
 			</section>
 			<section id="section-oracion" class="section" data-loaded="0" style="display:none;">
 				<h4 class="h-title">Oraciones</h4>
+				<div class="row d-md-none">
+					<div class="col-xs-12 pull-center">
+						<a id="rezar-menu"></a>&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-outline-success btn-sm" href="#adorote">Adoro te</a>
+						<a class="btn btn-outline-success btn-sm" href="#tedeum">Te Deum</a>
+						<a class="btn btn-outline-success btn-sm" href="#quebien">Qué bien contigo</a>
+				</div></div>
 				<div class='row'>
-					<div class="col-xs-12 col-md-6">
+					<div class="col-xs-12 col-md-4">
 						<div class="card">
 							<div class="card-header">
-								Adoro te devote
+								<a id="adorote"></a>Adoro te devote
 							</div>
 							<div class="card-body">
 								Te adoro con devoción, Dios escondido,<br /> 
@@ -201,10 +209,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-6">
+					<div class="col-xs-12 col-md-4">
+						<div class='clear d-block d-sm-none'></div>
 						<div class="card">
 							<div class="card-header">
-								Te Deum
+								<a id="tedeum"></a>Te Deum
+								<a href="#rezar-menu" class='btn btn-default btn-sm float-right'><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 							</div>
 							<div class="card-body">
 								A Ti, oh Dios, te alabamos,<br /> 
@@ -274,12 +284,67 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-xs-12 col-md-4">
+						<div class='clear d-block d-sm-none'></div>
+						<div class="card">
+							<div class="card-header">
+								<a id="quebien"></a>Qué bien se está contigo, Señor
+								<a href="#rezar-menu" class='btn btn-default btn-sm float-right'><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+							</div>
+							<div class="card-body">
+								¡Qué bien se está contigo, Señor, junto al Sagrario! <br />
+								¡Qué bien se está contigo! ¿Por qué no vendré más? <br />
+								Hace ya muchos años que vengo aquí a diario <br />
+								Y aquí te encuentro siempre, Amor Solitario, <br />
+								Solo, pobre, escondido, pensando en mí quizás. <br />
+								Tú no me dices nada ni yo te digo nada; <br />
+								Si Tú lo sabes todo, ¿qué voy a decirte? <br />
+								Sabes todas mis penas, todas mis alegrías, <br />
+								Sabes que vengo a verte con las manos vacías <br />
+								Y que no tengo nada que te pueda servir. <br />
+								Siempre que vengo a verte, siempre te encuentro solo. <br />
+								¿Será, Señor, que nadie sabe que estás aquí? <br />
+								No sé, pero sé, en cambio, que aunque nadie viniera, <br />
+								Aunque nadie te amara ni te lo agradeciera, <br />
+								Aquí estarías siempre esperándome a mí. <br />
+								¿Por qué no vendré más? ¡Qué ciego estoy, qué ciego! <br />
+								Si sé por experiencia que cuando a Ti me llego <br />
+								Siempre vuelvo cambiado, siempre salgo mejor. <br />
+								¿Adónde voy, Dios mío, cuando a mi Dios no vengo? <br />
+								¡Si Tú me esperas siempre! Si a Ti siempre te tengo, <br />
+								Si jamás me has cerrado las puertas de tu Amor.<br />
+								¿Por qué no vendré mas si sé que aquí, a tu lado, <br />
+								Puedo encontrar, Dios mío, lo que tanto he buscado <br />
+								Mi luz, mi fortaleza, mi paz, mi único bien? <br />
+								Si jamás he sufrido, si jamás he llorado, <br />
+								Señor, sin que conmigo llorases Tú también!<br />
+								¿Por qué no vendré más, Jesús? <br />
+								¡Si Tú lo estás deseando, si yo lo necesito! <br />
+								Si sé que no soy nada cuando no vengo aquí. <br />
+								Si aquí me enseñarás la ciencia de los santos <br />
+								Como aquí la buscaron y la aprendieron tantos, <br />
+								Que fueron tus amigos y gozan ya de Ti.<br />
+								¿Por qué no vendré más, si sé yo <br />
+								Que Tú eres el modelo único y necesario <br />
+								Que nada se hace duro mirándote a Ti aquí? <br />
+								El Sagrario es la celda donde estás encerrado. <br />
+								¡Qué pobre, qué obediente, qué manso, qué callado, <br />
+								¡Qué solo, qué escondido... nadie se fija en Ti!<br />
+								¿Por qué no vendré más ? ¡Oh, Bondad infinita! <br />
+								Riqueza inestimable que nada necesita, <br />
+								Y que te has humillado a mendigar mi amor. <br />
+								Ábreme ya esa puerta, sea ésa ya mi vida, <br />
+								Olvidado de todos, de todos escondida, <br />
+								¡Qué bien se está contigo, qué bien se está, Señor! <br />
+								Amén.
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
-		   </div>
-		</div>
+	<div class='clear'></div>		
 	</div>
-	<div class='clear'></div>
+	{% include 'web/footer.html.twig' %}
 
 <!--- Modal --->
 <div class="modal" tabindex="-1" role="dialog" id='modal-nota'>
@@ -304,28 +369,10 @@
       </div>
     </div>
   </div>
-</div>
-{% include 'web/footer.html.twig' %}
+ </div>
 {% block end_javascript %}
 <script>
 $(function() {
-	// Set up the OSM layer
-	var myTileServer = new ol.layer.Tile({
-	  source: new ol.source.OSM({
-	    crossOrigin: null,
-	    url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-	  })
-	});
-
-	// Create the map
-	var map = new ol.Map({
-	  layers: [ myTileServer ],
-	  target: 'map',
-	  view: new ol.View({
-	    center: ol.proj.transform([10, 45], 'EPSG:4326', 'EPSG:3857'),
-	    zoom: 8
-	  })
-	});
 
 	$.ajax({
 		  url: "{{ path('web_load_notas') }}",
@@ -339,7 +386,7 @@ $(function() {
 		}
 	);
 
-	getNoticia(0);
+	getNoticia('{{ path('app_web_getnoticia') }}',0);
 });
 </script>
 {% endblock %}

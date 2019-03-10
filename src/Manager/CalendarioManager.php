@@ -29,6 +29,7 @@ abstract class CalendarioManager {
         $arrDay = [];
         foreach ($entities as $entity) {
             foreach ($entity->getDiasemanahoras() as $dia) {
+                $start = clone $arrW[$dia->getHora()->format("w")];
                 if ($id == 0) {
                     
                     if ($entity->getBaja()) continue;
@@ -49,11 +50,16 @@ abstract class CalendarioManager {
                     $idx = count($ret);
                     $color = $entity->getColor();
                 }
-                $start = clone $arrW[$dia->getHora()->format("w")];
                 $data = ['id'=> $dia->getId(), 'start'=> sprintf('%sT%s', $start->format('Y-m-d'),$dia->getHora()->format('H:i:s')), 'title' => $title, 'allDay' =>false, 'backgroundColor' => $color];
                     
                 if (!is_null($dia->getFin())) {
-                    $data['end'] = sprintf('%sT%s', $start->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
+                    if (intval($dia->getFin()->format('H')) > 0)
+                        $data['end'] = sprintf('%sT%s', $start->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
+                    else  {
+                        $f = clone $start;
+                        $f->add(new \DateInterval('P1D'));
+                        $data['end'] = sprintf('%sT%s', $f->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
+                    }
                 }
                 $ret[$idx] = $data;
             }

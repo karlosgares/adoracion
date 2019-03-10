@@ -90,7 +90,7 @@ $(function() {
 			  data: {'tipohora': tipohora, 'id': data['id'], 'start': start._i, 'end': end._i, 'className': data['className']},
 			  method: 'POST'
 			}).done(function(res) { 
-			 	var event = {'start': res.start, 'end': res.end, 'title': res.title,   backgroundColor: '{{ color }}' };
+			 	var event = {'id': res.id, 'start': res.start, 'end': res.end, 'title': res.title,   backgroundColor: '{{ color }}' };
 		         $('#calendar').fullCalendar( 'renderEvent', event);
 		         $('#calendar').fullCalendar( 'rerenderEvents' )
 			}

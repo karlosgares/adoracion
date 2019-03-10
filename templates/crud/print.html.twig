@@ -10,7 +10,6 @@
 <nav class="navbar">
 	<button onclick='window.print();' class='btn btn-default'>Imprimir</button>
 </nav>
-<center>
 <section class='section-{{ className }}' style='padding: 10px;'>
 {% if className == 'obispo' %}
 <h2 class='title-obispo'><ul>Intenciones de Mario Iceta</h2>
@@ -20,15 +19,11 @@
 {% endfor %}
 </ol>
 {% elseif className == 'nota' %}
-<table width='100%' border='0'>
+<ul>
 {% for nota in results %}
-	{% if loop.index0 is divisible by(2) %}
-	<tr><td width='50%'  style='padding: 8px!important; vertical-align:top;'>{{ nota.getTexto() }}</td>
-	{% else %}
-	<td  style='padding: 8px!important; vertical-align:top;'>{{ nota.getTexto() }}</td></tr>
-	{% endif %}
+	<li>{{ nota.getTexto() }}</li>
 {% endfor %}
-</tr></table>
+</ul>
 {% elseif className == 'sacerdote' %}
 <table width='1500px' border="1">
 <thead>
@@ -62,6 +57,5 @@
 </table>
 {% endif %}
 </section>
-</center>
 </body>
 </html>

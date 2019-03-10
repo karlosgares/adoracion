@@ -47,8 +47,8 @@ abstract class NotaAdmin extends AbstractAdmin
         }
         else {
             $now = new \DateTime('NOW');
-            $now->add(new \DateInterval('P1M'));
-            $this->getSubject()->setFecha(new \DateTime($now->format('Y-m-1')));
+            $mes = $now->format('m') + 1;
+            $this->getSubject()->setFecha(new \DateTime($now->format('Y-' . $mes . '-1')));
             $this->getSubject()->setValida(true);
         }
 
@@ -85,11 +85,13 @@ abstract class NotaAdmin extends AbstractAdmin
 
     public function configureActionButtons($action, $object = null) {
         $list = parent::configureActionButtons($action, $object);
-        $list['print'] = [
-                // NEXT_MAJOR: Remove this line and use commented line below it instead
-                'template' => 'crud/button_print.html.twig',
-                // 'template' => $this->getTemplateRegistry()->getTemplate('button_list'),
-        ];
+        if ($action == "list") {
+            $list['print'] = [
+                    // NEXT_MAJOR: Remove this line and use commented line below it instead
+                    'template' => 'crud/button_print.html.twig',
+                    // 'template' => $this->getTemplateRegistry()->getTemplate('button_list'),
+            ];
+        }
 
         return $list;
     }

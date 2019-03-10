@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sacerdote
 {   
-    const color = "#AAAAFF";
+    const color = "#AACA31";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -35,7 +35,7 @@ class Sacerdote
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $telefono;
 

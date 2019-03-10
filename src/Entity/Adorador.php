@@ -37,9 +37,35 @@ class Adorador
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $telefono;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $movil;
+
+    /**
+     * @ORM\Column(type="string", length=70, nullable=true)
+     */
+    private $responsable;
+
+    /**
+     * @ORM\Column(type="string", length=70, nullable=true)
+     */
+    private $direccion;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $cp;
+
+    /**
+     * @ORM\Column(type="string", length=80, nullable=true)
+     */
+    private $poblacion;
+
 
     /**
      * @ORM\Column(type="integer",nullable=true)
@@ -177,6 +203,66 @@ class Adorador
     public function setBaja(?bool $baja): self
     {
         $this->baja = $baja;
+
+        return $this;
+    }
+
+    public function getMovil(): ?string
+    {
+        return $this->movil;
+    }
+
+    public function setMovil(?string $movil): self
+    {
+        $this->movil = $movil;
+
+        return $this;
+    }
+
+    public function getResponsable(): ?string
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?string $responsable): self
+    {
+        $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(?string $direccion): self
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    public function getCp(): ?string
+    {
+        return $this->cp;
+    }
+
+    public function setCp(?string $cp): self
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
+    public function getPoblacion(): ?string
+    {
+        return $this->poblacion;
+    }
+
+    public function setPoblacion(?string $poblacion): self
+    {
+        $this->poblacion = $poblacion;
 
         return $this;
     }

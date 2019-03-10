@@ -5,6 +5,7 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 require dirname(__DIR__).'/src/.bootstrap.php';
+$_SERVER['APP_DEBUG'] = true;
 
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);
@@ -19,8 +20,8 @@ if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? $_ENV['TRUSTED_PROXIES'] ??
 if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
-
-$kernel = new Kernel($_SERVER['APP_ENV'], $_SERVER['APP_DEBUG']);
+require_once __DIR__.'/../vendor/autoload.php';
+$kernel = new Kernel($_SERVER['APP_ENV'],$_SERVER['APP_DEBUG']);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

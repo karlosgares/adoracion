@@ -30,7 +30,7 @@ final class FraseAdmin extends AbstractAdmin
 			->add('autor')
 			->add('_action', null, [
                 'actions' => [
-                    'show' => [],
+                    'show' => ['template' => 'button/print.html.twig'],
                     'edit' => [],
                     'delete' => [],
                 ],
@@ -54,9 +54,9 @@ final class FraseAdmin extends AbstractAdmin
 			->add('autor')
 			;
     }
-
+/*
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('show');
-    }
+    } */
 }
