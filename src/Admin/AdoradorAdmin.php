@@ -11,8 +11,8 @@ class AdoradorAdmin extends UsuarioAdmin
 	
 	protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('nombre')
-                    ->add('apellidos', TextType::class)
+        $listMapper->add('apellidos', TextType::class)
+                    ->add('nombre')
                     ->add('email', EmailType::class)
                     ->add('telefono', TextType::class, ['label'=> 'Teléfono'])
                     ->add('movil', TextType::class, ['label'=> 'Móvil'])
