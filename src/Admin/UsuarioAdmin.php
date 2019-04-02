@@ -16,6 +16,18 @@ use App\Entity\Adorador;
 class UsuarioAdmin extends AbstractAdmin
 {   
 
+     protected $datagridValues = [
+
+        // display the first page (default = 1)
+        '_page' => 1,
+
+        // reverse order (default = 'ASC')
+        '_sort_order' => 'ASC',
+
+        // name of the ordered field (default = the model's id field, if any)
+        '_sort_by' => 'apellidos',
+    ];
+
     public function toString($entity) {
         return $entity->__toString();
     }
@@ -82,8 +94,9 @@ class UsuarioAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('nombre')
+        $listMapper
                     ->add('apellidos', TextType::class)
+                    ->add('nombre')
                     ->add('email', EmailType::class)
                     ->add('telefono', TextType::class)
                     ->add('_action', null, [
