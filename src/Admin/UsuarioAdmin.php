@@ -58,7 +58,10 @@ class UsuarioAdmin extends AbstractAdmin
                 ->add('cp', TextType::class, ['required'=>false, 'label'=> 'CP'])
                 ->add('poblacion', TextType::class, ['required'=>false, 'label'=> 'Población'])
                 ->add('sustitucionfranja', ChoiceType::class, ['label'=> 'Franja horaria de sustituto', 'required'=>false, 'choices'=>array_flip(Adorador::getSustitucionfranjas()), 'placeholder'=> 'Elegir para sustitutos'])
-                ->add('baja')
+                 ->add('tipo', ChoiceType::class, ['label'=> 'Tipo', 'required'=>true, 'choices'=>array_flip(Adorador::getTipos())])
+                 ->add('observaciones')
+                
+                //->add('baja')
 
             ;
 
@@ -86,6 +89,7 @@ class UsuarioAdmin extends AbstractAdmin
             $datagridMapper->add('diasemanahoras.dayofweek',null,['label'=> 'Día de la semana'], ChoiceType::class, ['choices'=>array_flip(Adorador::getDayofweek())])
                 ->add('diasemanahoras.hhmm',null,['label'=> 'Hora'], ChoiceType::class, ['choices'=>$horas])
                 ->add('sustitucionfranja',null,['label'=> 'Franja horaria de sustituto'], ChoiceType::class, ['choices'=>array_flip(Adorador::getSustitucionfranjas())])
+                ->add('tipo',null,['label'=> 'Tipo'], ChoiceType::class, ['choices'=>array_flip(Adorador::getTipos())])
                 ->add('baja')
 
             ;
