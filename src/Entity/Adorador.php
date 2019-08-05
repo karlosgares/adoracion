@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdoradorRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Adorador
 {
@@ -82,6 +83,17 @@ class Adorador
      * @ORM\Column(type="boolean",nullable=true)
      */
     private $baja;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true,  options={"default":0})
+     */
+    private $tipo;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $observaciones;
 
     public function __construct()
     {
@@ -263,6 +275,51 @@ class Adorador
     public function setPoblacion(?string $poblacion): self
     {
         $this->poblacion = $poblacion;
+
+        return $this;
+    }
+
+    public function getTipo(): ?int
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(?int $tipo): self
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    public static function getTipos() {
+
+        return [0 => 'Activo',1 => 'Solidario', 2 => 'Baja', 3 => 'Web'];
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->baja = ($this->tipo > 0);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->onPrePersist();
+    }
+
+    public function getObservaciones(): ?string
+    {
+        return $this->observaciones;
+    }
+
+    public function setObservaciones(?string $observaciones): self
+    {
+        $this->observaciones = $observaciones;
 
         return $this;
     }
