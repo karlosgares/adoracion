@@ -162,7 +162,8 @@ class Noticia
     }
 
     public function getTargetDirectory() {
-        $path = $_SERVER['DOCUMENT_ROOT'] . '\noticias';
+        $path = $_SERVER['DOCUMENT_ROOT'] . '/noticias';
+
         if (!is_dir($path))
             mkdir($path);
         return $path;

@@ -60,7 +60,8 @@ final class NoticiaAdmin extends AbstractAdmin
                     'dp_calendar_weeks'     => false,
                     'dp_view_mode'          => 'days',
                     'dp_min_view_mode'      => 'days',
-                    'label' => 'Fecha alta'
+                    'label' => 'Fecha alta',
+                    'format' => 'dd/MM/yyyy'
             ])
 			->add('fechabaja', DatePickerType::class, [
                     'dp_side_by_side'       => true,
@@ -69,7 +70,8 @@ final class NoticiaAdmin extends AbstractAdmin
                     'dp_calendar_weeks'     => false,
                     'dp_view_mode'          => 'days',
                     'dp_min_view_mode'      => 'days',
-                    'label' => 'Fecha baja', 'required' => false
+                    'label' => 'Fecha baja', 'required' => false,
+                    'format' => 'dd/MM/yyyy'
             ])
 			->add('titulo', null, ['label'=> 'Título'])
 			->add('contenido', TextareaType::class, ['label'=> 'Contenido', 'required' => false, 'attr'=> ['rows' => 10, 'class' => 'tinymce']])

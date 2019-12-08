@@ -163,8 +163,8 @@ class WebController extends AbstractController
         $qb = $em->createQueryBuilder();
         $qb->select('n')
                    ->from('App:Nota', 'n')
-                   ->where('n.valida=1 and n.tipo in ('.implode(",", $arr).')')
-                   ->andwhere("n.fecha BETWEEN :fecha AND :fin")->setParameter('fecha',$fecha)->setParameter('fin',$fin)
+                   ->where('n.valida=1 and n.tipo in ('.implode(",", $arr).')'); /*
+                   ->andwhere("n.fecha BETWEEN :fecha AND :fin")->setParameter('fecha',$fecha)->setParameter('fin',$fin)*/
         ;
 
         return $qb;
@@ -192,28 +192,28 @@ class WebController extends AbstractController
                 case 0:
                     $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
                     $ret['html'] .= '<p>' .nl2br($entity->getContenido());
-                    $ret['html'] .= '<img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="right"  style="padding: 5px">';
+                    $ret['html'] .= '<a href="/noticias/'.$entity->getFoto().'" target="_blank"><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="right"  style="padding: 5px"></a>';
                     $ret['html'] .=  '</p>';
                     break;
                 
                 case 1:
                     $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
                     $ret['html'] .= '<p>' . nl2br($entity->getContenido());
-                    $ret['html'] .= '<img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="left"  style="padding: 5px">';
+                    $ret['html'] .= '<a href="/noticias/'.$entity->getFoto().'" target="_blank"><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt="" align="left"  style="padding: 5px"></a>';
                     $ret['html'] .=  '</p>';
                     break;
 
 
                 case 2:                                                                                 $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
                     $ret['html'] .= '<p>' . nl2br($entity->getContenido());
-                    $ret['html'] .= '<center><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></center>';
+                    $ret['html'] .= '<center><a href="/noticias/'.$entity->getFoto().'" target="_blank"><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></a></center>';
                     $ret['html'] .=  '</p>';                             
 
                     break;
 
                 case 3:
                     $ret['html'] = '<h5>'.$entity->getTitulo().'</h5>';
-                    $ret['html'] .= '<center><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></center>';
+                    $ret['html'] .= '<center><a href="/noticias/'.$entity->getFoto().'" target="_blank"><img src="/noticias/'.$entity->getFoto().'" class="img-fluid" alt=""  style="padding: 5px"></a></center>';
                     $ret['html'] .= '<p>' . $entity->getContenido();
                     $ret['html'] .=  '</p>'; 
 

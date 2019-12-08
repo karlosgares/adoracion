@@ -61,6 +61,11 @@ abstract class CalendarioManager {
                         $data['end'] = sprintf('%sT%s', $f->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
                     }
                 }
+                if (array_key_exists($idx, $arrDay))
+                    $data["count"] = $arrDay[$idx];
+                else {
+                    $data["count"] = 0;
+                }
                 $ret[$idx] = $data;
             }
         }
