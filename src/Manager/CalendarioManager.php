@@ -95,6 +95,9 @@ abstract class CalendarioManager {
         if ($id > 0) {
             $qb->andWhere('s.id = :idsacerdote')->setParameter('idsacerdote', $id);
         }
+        else {
+             $qb->andWhere('s.activo = 1');
+        }
         
         $qb->orderBy('d.hora');
         $rst = $qb->getQuery()->getResult();

@@ -66,6 +66,11 @@ class UsuarioAdmin extends AbstractAdmin
 
             ;
 
+        }
+        else {
+            $formMapper
+                ->add('activo')
+            ;
         }        
 
         $formMapper->end()->end()
