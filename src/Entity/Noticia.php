@@ -57,6 +57,9 @@ class Noticia
      */
     private $posicion;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -191,5 +194,38 @@ class Noticia
 
     public function getFullfoto() {
         return $this->getTargetDirectory() . "/" . $this->getFoto();
+    }
+
+    /**
+     * Devuelve la diferencia con hoy
+     * @return string
+     * @throws \Exception
+     */
+    public function getHace():string {
+        $now = new \DateTime('NOW');
+        $diff = $this->getFechaalta()->diff($now)->format('%a');
+        if ( (int) $diff == 0) {
+            $ret = "hoy";
+        }
+        else if ( (int) $diff == 1) {
+            $ret = sprintf("%s día", $diff);
+        }
+        else {
+            $ret = sprintf("%s días", $diff);
+        }
+        return $ret;
+    }
+
+    /**
+     * Devuelve true si debe salir en la web por activo y fechas
+     * @return bool
+     * @throws \Exception
+     */
+    public function inWeb():bool {
+        $now = new \DateTime('NOW');
+        $bFechaAlta = ( null !== $this->getFechaalta() || $now >=  $this->getFechaalta());
+        $bFechaBaja = ( null !==  $this->getFechabaja() || $now <=  $this->getFechabaja());
+
+        return ( $this->getActivo() && $bFechaAlta && $bFechaBaja);
     }
 }

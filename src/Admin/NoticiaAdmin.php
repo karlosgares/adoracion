@@ -16,7 +16,20 @@ use App\Form\Type\ImageType;
 
 final class NoticiaAdmin extends AbstractAdmin
 {
-	public function toString($entity) {
+    protected $datagridValues = [
+
+        // display the first page (default = 1)
+        '_page' => 1,
+
+        // reverse order (default = 'ASC')
+        '_sort_order' => 'DESC',
+
+        // name of the ordered field (default = the model's id field, if any)
+        '_sort_by' => 'id',
+    ];
+
+
+    public function toString($entity) {
 		return 'Noticia';
 	}
 
@@ -33,7 +46,8 @@ final class NoticiaAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-			->add('fechaalta', null, ['label'=> 'Fecha alta', 'format'=> "d-m-Y"])
+            ->add('id')
+            ->add('fechaalta', null, ['label'=> 'Fecha alta', 'format'=> "d-m-Y"])
 			->add('titulo', null, ['label'=> 'Título'])
 			->add('activo')
 			->add('_action', null, [

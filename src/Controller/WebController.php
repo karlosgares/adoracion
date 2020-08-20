@@ -68,8 +68,42 @@ class WebController extends AbstractController
         $data['color0'] = Adorador::color0;
         $data['color1'] = Adorador::color1;
         $data['frase'] = $frase;
-        $data['version'] = (isset($_GET['version']))?$_GET['version']:4;
+        $data['version'] = $this->getVersion();
         return $this->render('web/index.html.twig',$data);
+    }
+
+    /**
+     * @Route("/web/prueba222", name="web_index2")
+     */
+    public function prueba222Action(Request $request)
+    {
+        setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+        $now = new \DateTime('NOW');
+        $data['mes'] = strtoupper($now->format('F'));
+        $data['obispo'] =  $this->getQueryNotas([1])->getQuery()->getResult();
+        $em = $this->getDoctrine()->getEntityManager();
+        /// frase
+        $frase = $em->getRepository("App\\Entity\\Frase")->findOneBy(["activa" => 1]);
+
+        if (!$frase)
+            $frase = $em->getRepository("App\\Entity\\Frase")->findOne();
+
+
+        /// noticias
+        $qb = $em->createQueryBuilder();
+        $qb->select('n')
+            ->from('App:Noticia', 'n')
+            ->where('n.activo=1')
+            ->andwhere("n.fechaalta <=:fecha")
+            ->andwhere("n.fechabaja >= :fecha or n.fechabaja is null")->setParameter('fecha',$now->format('Y-m-d'))
+            ->orderBy('n.fechaalta','desc')
+        ;
+        $data['noticias'] = $qb->getQuery()->getResult();
+        $data['color0'] = Adorador::color0;
+        $data['color1'] = Adorador::color1;
+        $data['frase'] = $frase;
+        $data['version'] = $this->getVersion();
+        return $this->render('web/prueba.html.twig',$data);
     }
 
     /**
@@ -144,12 +178,13 @@ class WebController extends AbstractController
         $em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository("App\\Entity\\" . $className)->findOneById($id);
         
-        if ($entity) {
+        if ($entity && $entity->getActivo()) {
             $data['object'] = $entity;
         }
         else {
-            $data['msgError'] = "No existe la noticia";
+            return $this->redirectToRoute('web_index');
         }
+        $data['version'] = $this->getVersion();
         return $this->render('web/noticia.html.twig',$data);
     }
 
@@ -224,5 +259,13 @@ class WebController extends AbstractController
             $ret['html'] = '';
         }
         return new JsonResponse($ret, 200);
+    }
+
+    /**
+     * Devuelve una versión para los css
+     * @return int
+     */
+    public function getVersion():int {
+        return  (isset($_GET['version']))?$_GET['version']:4;
     }
 }

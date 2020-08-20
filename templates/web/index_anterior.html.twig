@@ -2,43 +2,9 @@
 {% include 'web/header.html.twig' with vars %}
 
 		<div class="container-fluid body-back">
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				<strong>Capilla de la Adoración Perpetua  se ha clausurado temporalmente</strong>
-				<p>Debido al problema creado por el Coronavirus y siguiendo indicaciones del Sr. Obispo, se ha clausurado temporalmente la Capilla de la Adoración Perpetua, Se reabrirá cuando pase esta situación que estamos viviendo. Recemos todos para que llegue pronto ese momento y mientras tanto podemos seguir  haciendo nuestro turno de adoración habitual desde nuestra casa pidiendo por los fallecidos, por los infectados y para que acabe pronto esta pandemia. Muchas gracias a todos. Adorado sea el Santísimo Sacramento</p>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="container-fluid body-back">
-				<div class="alert alert-info alert-dismissible fade show" role="alert">
-				La capilla de la adoración eucarística perpetua no reúne las condiciones de ventilación adecuadas para evitar el contagio, este es el motivo por el que llevamos varios días intentando encontrar otro lugar de culto sustitutivo para el tiempo que dure la pandemia. De momento no lo hemos encontrado pero seguimos intentándolo. Os rogamos una oración por esta intención.Muchas gracias.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
 			<section id="section-home" class="section" data-loaded="0">
 			<h4 class="h-title">Inicio</h4>
 			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<div class="card">
-						<div class="card-header">
-							<i class="fas fa-newspaper"></i>&nbsp;&nbsp;Noticias
-						</div>
-						<div class="card-body">
-							<div class="list-group">
-								{% for nota in noticias if nota.getActivo() %}
-									<a href="{{ url('web_load_noticia',{'id': nota.getId()}) }}" class="list-group-item list-group-item-action">
-										<div class="d-flex w-100 justify-content-between">
-											<b class="mb-1">{{ nota.getTitulo() }}</b>
-										</div>
-										<p class="mb-1">{{ nota.getContenido()|truncate(180,'...') }}</p>
-										<small>{{ nota.getHace() }}</small>
-									</a>
-								{% endfor %}
-							</div>
-						</div>
-					 </div>
-				</div>
 				<div class="col-xs-12 col-sm-6">
 					{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00', 'calendarHeight': 670, 'headerRight': '' } %}
 					<div class="card card-adoradores">
@@ -57,32 +23,73 @@
 						 </div>
 						{% include 'web/calendar.html.twig' with vars %}
 					</div>
-					<div class='clear'></div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+				    {#<div class='clear d-block d-sm-none'></div>
 					<div class="card">
 						<div class="card-header">
-							<i class="fas fa-pray" aria-hidden="true"></i>&nbsp;&nbsp;Intenciones del mes de Don Marío Iceta
-						</div>
-						<div class="card-body">
-							<ol id="lista-nota-1">
-								{% for nota in obispo %}
-									<li>{{ nota.getTexto() }}</li>
-								{% endfor %}
-							</ol>
-						</div>
+						   <i class="fas fa-calendar-plus"></i>&nbsp;&nbsp; Confesiones&nbsp;&nbsp;
+						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote float-right'>
+					  	</div>
+					  	<div class="card-body">
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 500, 'headerRight': 'prev,next' } %}
+						{% include 'web/calendar.html.twig' with vars %}
+					  	</div>
 					</div>
 					<div class='clear'></div>
+					#}
 					<div class="card">
 						<div class="card-header">
-							<i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;Frase
-						</div>
-						<div class="card-body">
-							<p>{{ frase.getTexto() }}</p>
-							{% if frase.getAutor() != '' %}
-								<span class='text-right autor'>{{ frase.getAutor() }}</span>
-							{% endif %}
+						   <i class="fas fa-newspaper"></i>&nbsp;&nbsp;Noticias
+					  	</div>
+					  	<div class="card-body">
+							<div id="carouselNoticias" class="carousel slide" data-ride="carousel">
+							    <div class="carousel-inner">
+							    {% for nota in noticias %}
+						    		<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"><a href="javascript:void(0);" class="list-noticia" onclick="javascript:getNoticia('{{ path('app_web_getnoticia') }}',{{ nota.getId() }});goto(this,'noticias');">{{ nota.getTitulo() }}</a></div>
+						  		{% endfor %}
+							    </div>
+							</div>
 						</div>
 					</div>
-					<div class='clear'></div>
+				</div>
+			</div>
+			<div class='clear'></div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6">
+					<div class="card">
+						<div class="card-header">
+						 <i class="fas fa-pray" aria-hidden="true"></i>&nbsp;&nbsp;Intenciones del mes de Don Marío Iceta
+						</div>
+					  	<div class="card-body">
+					    	<ol id="lista-nota-1">
+					    		{% for nota in obispo %}
+					    		<li>{{ nota.getTexto() }}</li>	
+					    		{% endfor %}
+					    	</ol>
+					  	</div>
+				  	</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+				  	{% if frase is defined %}
+					<div class='clear d-block d-sm-none'></div>
+					<div class="card">
+						<div class="card-header">
+						 <i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;Frase
+						</div>
+					  	<div class="card-body">
+					    	<p>{{ frase.getTexto() }}</p>
+					    	{% if frase.getAutor() != '' %}
+					    	<span class='text-right autor'>{{ frase.getAutor() }}</span>
+					    	{% endif %}
+					  	</div>
+				  	</div>
+				  	{% endif %}
+				</div>
+			</div>
+			<div class='clear'></div>
+			<div class='row'>
+				<div class="col-xs-12 col-sm-6">	
 					<div class="card">
 						<div class="card-header">
 							<i class="fas fa-home"></i><a id="contacto"></a>&nbsp;&nbsp;Contacto
@@ -96,7 +103,7 @@
 						</div
 					</div>
 				</div>
-			</div>
+			</div>	
 			</section>
 
 			<section id="section-noticias" class="section" data-loaded="0" style="display:none;">
