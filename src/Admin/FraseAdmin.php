@@ -11,6 +11,18 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 final class FraseAdmin extends AbstractAdmin
 {
+protected $datagridValues = [
+
+        // display the first page (default = 1)
+        '_page' => 1,
+
+        // reverse order (default = 'ASC')
+        '_sort_order' => 'DESC',
+
+        // name of the ordered field (default = the model's id field, if any)
+        '_sort_by' => 'id',
+    ];
+
     public function toString($entity) {
         return "Frase";
     }
@@ -27,7 +39,8 @@ final class FraseAdmin extends AbstractAdmin
     {
         $listMapper
 			->add('textoshort', null, ['label' => 'Texto'])
-			->add('autor')
+            ->add('autor')
+            ->add('activa')
 			->add('_action', null, [
                 'actions' => [
                     'show' => ['template' => 'button/print.html.twig'],
@@ -54,9 +67,26 @@ final class FraseAdmin extends AbstractAdmin
 			->add('autor')
 			;
     }
-/*
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->remove('show');
-    } */
+
+    /**
+     * Activo false a la anterior frase
+     *
+     * @param Frase $object
+     * @return void
+     */
+    public function prePersist($object)
+    {   
+        if ($object->getActiva() == false) {
+            return;
+        }
+        $container = $this->getConfigurationPool()->getContainer();
+        $em = $container->get('doctrine')->getManager();
+        $repo = $em->getRepository(get_class($object));
+        $fraseActiva = $repo->findOneBy(['activa'=> 1]);
+        if ($fraseActiva && $fraseActiva->getId() > 0){
+            $fraseActiva->setActiva(false);
+            $em->persist($fraseActiva);
+            // $em->flush();
+        }
+    }
 }
