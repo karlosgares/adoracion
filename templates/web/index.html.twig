@@ -2,20 +2,6 @@
 {% include 'web/header.html.twig' with vars %}
 
 		<div class="container-fluid body-back">
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				<strong>Capilla de la Adoración Perpetua  se ha clausurado temporalmente</strong>
-				<p>Debido al problema creado por el Coronavirus y siguiendo indicaciones del Sr. Obispo, se ha clausurado temporalmente la Capilla de la Adoración Perpetua, Se reabrirá cuando pase esta situación que estamos viviendo. Recemos todos para que llegue pronto ese momento y mientras tanto podemos seguir  haciendo nuestro turno de adoración habitual desde nuestra casa pidiendo por los fallecidos, por los infectados y para que acabe pronto esta pandemia. Muchas gracias a todos. Adorado sea el Santísimo Sacramento</p>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="container-fluid body-back">
-				<div class="alert alert-info alert-dismissible fade show" role="alert">
-				La capilla de la adoración eucarística perpetua no reúne las condiciones de ventilación adecuadas para evitar el contagio, este es el motivo por el que llevamos varios días intentando encontrar otro lugar de culto sustitutivo para el tiempo que dure la pandemia. De momento no lo hemos encontrado pero seguimos intentándolo. Os rogamos una oración por esta intención.Muchas gracias.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
 			<section id="section-home" class="section" data-loaded="0">
 			<h4 class="h-title">Inicio</h4>
 			<div class="row">
@@ -56,6 +42,18 @@
 							</div>
 						 </div>
 						{% include 'web/calendar.html.twig' with vars %}
+					</div>
+					<div class='clear'></div>
+					<div class="col-xs-12">
+					<div class="card">
+						<div class="card-header">
+						   <i class="fas fa-calendar-plus"></i>&nbsp;&nbsp; Confesiones&nbsp;&nbsp;
+						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote float-right'>
+					  	</div>
+					  	<div class="card-body">
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 500, 'headerRight': 'prev,next' } %}
+						{% include 'web/calendar.html.twig' with vars %}
+					  	</div>
 					</div>
 					<div class='clear'></div>
 					<div class="card">
