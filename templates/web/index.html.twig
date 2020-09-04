@@ -1,30 +1,9 @@
 {% set vars = {'version': version} %}
 {% include 'web/header.html.twig' with vars %}
-
-		<div class="container-fluid body-back">
-			<section id="section-home" class="section" data-loaded="0">
+	<div class="container-fluid body-back">
+		<section id="section-home" class="section" data-loaded="0">
 			<h4 class="h-title">Inicio</h4>
 			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<div class="card">
-						<div class="card-header">
-							<i class="fas fa-newspaper"></i>&nbsp;&nbsp;Noticias
-						</div>
-						<div class="card-body">
-							<div class="list-group">
-								{% for nota in noticias if nota.getActivo() %}
-									<a href="{{ url('web_load_noticia',{'id': nota.getId()}) }}" class="list-group-item list-group-item-action">
-										<div class="d-flex w-100 justify-content-between">
-											<b class="mb-1">{{ nota.getTitulo() }}</b>
-										</div>
-										<p class="mb-1">{{ nota.getContenido()|truncate(180,'...') }}</p>
-										<small>{{ nota.getHace() }}</small>
-									</a>
-								{% endfor %}
-							</div>
-						</div>
-					 </div>
-				</div>
 				<div class="col-xs-12 col-sm-6">
 					{% set vars = {'calendar': 'calendar-adorador', 'tipo': 'adorador', 'url': path('web_load_calendar'),'minTime': '00:00:00','maxTime': '24:00:00', 'calendarHeight': 670, 'headerRight': '' } %}
 					<div class="card card-adoradores">
@@ -43,8 +22,8 @@
 						 </div>
 						{% include 'web/calendar.html.twig' with vars %}
 					</div>
-					<div class='clear'></div>
-					<div class="col-xs-12">
+				</div>
+				<div class="col-xs-12 col-sm-6">
 					<div class="card">
 						<div class="card-header">
 						   <i class="fas fa-calendar-plus"></i>&nbsp;&nbsp; Confesiones&nbsp;&nbsp;
@@ -55,10 +34,46 @@
 						{% include 'web/calendar.html.twig' with vars %}
 					  	</div>
 					</div>
-					<div class='clear'></div>
+					<br />
 					<div class="card">
 						<div class="card-header">
-							<i class="fas fa-pray" aria-hidden="true"></i>&nbsp;&nbsp;Intenciones del mes de Don Marío Iceta
+							<i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;Frase
+						</div>
+						<div class="card-body">
+							<p>{{ frase.getTexto() }}</p>
+							{% if frase.getAutor() != '' %}
+								<span class='text-right autor'>{{ frase.getAutor() }}</span>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6">
+					<div class="card">
+						<div class="card-header">
+							<i class="fas fa-newspaper"></i><a id="noticiasdestacadas"></a>&nbsp;&nbsp;Noticias
+						</div>
+						<div class="card-body">
+							<div class="list-group">
+								{% for nota in noticias if nota.getActivo() and nota.getPortada() %}
+									<a href="{{ url('web_load_noticia',{'id': nota.getId()}) }}" class="list-group-item list-group-item-action">
+										<div class="d-flex w-100 justify-content-between">
+											<b class="mb-1">{{ nota.getTitulo() }}</b>
+										</div>
+										<p class="mb-1">{{ nota.getContenido()|truncate(180,'...') }}</p>
+										<small>{{ nota.getHace() }}</small>
+									</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="card">
+						<div class="card-header">
+							<i class="fas fa-pray" aria-hidden="true"></i><a id="obispo"></a>&nbsp;&nbsp;Intenciones del mes de Don Marío Iceta
 						</div>
 						<div class="card-body">
 							<ol id="lista-nota-1">
@@ -71,16 +86,202 @@
 					<div class='clear'></div>
 					<div class="card">
 						<div class="card-header">
-							<i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;Frase
+							<div class='row'>
+								<div class='col-sm-10'><i class="fas fa-pray"></i><a id="intenciones"></a> Intenciones&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-2 float-right'></div><div class='col-sm-2 text-right'>
+									<button class='btn btn btn-light btn-sm' onclick='AbrirModal(2)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button>
+								</div>
+							</div>
 						</div>
 						<div class="card-body">
-							<p>{{ frase.getTexto() }}</p>
-							{% if frase.getAutor() != '' %}
-								<span class='text-right autor'>{{ frase.getAutor() }}</span>
-							{% endif %}
+							<ul id="lista-nota-2"></ul>
 						</div>
 					</div>
 					<div class='clear'></div>
+					<div class="card">
+						<div class="card-header">
+							<div class='row'>
+								<div class='col-sm-10'>
+									<i class="fas fa-praying-hands"></i><a id="acciongracias"></a> Acción de gracias
+								&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-3 float-right'>
+								</div>
+								<div class='col-sm-2 text-right'><button class='btn btn btn-light btn-sm' onclick='AbrirModal(3)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button></div>
+							</div>
+						</div>
+						<div class="card-body">
+								<ul id="lista-nota-3"></ul>
+						</div>
+					</div>
+					<div class='clear'></div>
+					<div class='row'>
+						<div class='col-12'>
+							<div class='alert alert-info text-center' role='alert'>Escribe tu intención personal o acción de gracias pinchando en <i class="fas fa-edit"></i>.<br /> No se guarda nigún dato personal, ni se usa caché.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='row'>
+				<div class="col-xs-12 col-md-4">
+					<div class="card">
+						<div class="card-header">
+							<a id="adorote"></a>Adoro te devote
+						</div>
+						<div class="card-body">
+							Te adoro con devoción, Dios escondido,<br /> 
+							oculto verdaderamente bajo estas apariencias. <br /> 
+							A Ti se somete mi corazón por completo,<br /> 
+							y se rinde totalmente al contemplarte.<br />  <br /> 
+							Al juzgar de Ti, se equivocan la vista, el tacto, el gusto;<br />  
+							pero basta el oído para creer con firmeza; <br /> 
+							creo todo lo que ha dicho el Hijo de Dios:<br /> 
+							nada es más verdadero que esta palabra de verdad.<br /> <br />  
+							En la Cruz se escondía sólo la Divinidad, <br /> 
+							pero aquí se esconde también la Humanidad;<br />  
+							creo y confieso ambas cosas,<br />  
+							y pido lo que pidió aquel ladrón arrepentido.<br />  
+							No veo las llagas como las vio Tomas pero confieso que eres mi <br /> Dios: haz que yo crea más y más en Ti, que en Ti esperé y que te ame. <br /> <br /> 
+							¡Oh memorial de la muerte del Señor! <br /> 
+							Pan vivo que das vida al hombre:<br />  
+							concede a mi alma que de Ti viva y que siempre saboree tu dulzura. <br /> Señor Jesús, bondadoso Pelícano, límpiame a mí,inmundo, con tu Sangre, de la que una sola gota puede liberar de todos los crímenes al mundo entero. <br /> <br /> 
+							Jesús, a quien ahora veo oculto, <br /> 
+							te ruego que se cumpla lo que tanto ansío: <br /> 
+							que al mirar tu rostro cara a cara, sea yo feliz viendo tu gloria.<br /> 
+								Amén.
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-4">
+					<div class='clear d-block d-sm-none'></div>
+					<div class="card">
+						<div class="card-header">
+							<a id="quebien"></a>Qué bien se está contigo, Señor
+						</div>
+						<div class="card-body">
+							¡Qué bien se está contigo, Señor, junto al Sagrario! <br />
+							¡Qué bien se está contigo! ¿Por qué no vendré más? <br />
+							Hace ya muchos años que vengo aquí a diario <br />
+							Y aquí te encuentro siempre, Amor Solitario, <br />
+							Solo, pobre, escondido, pensando en mí quizás. <br />
+							Tú no me dices nada ni yo te digo nada; <br />
+							Si Tú lo sabes todo, ¿qué voy a decirte? <br />
+							Sabes todas mis penas, todas mis alegrías, <br />
+							Sabes que vengo a verte con las manos vacías <br />
+							Y que no tengo nada que te pueda servir. <br />
+							Siempre que vengo a verte, siempre te encuentro solo. <br />
+							¿Será, Señor, que nadie sabe que estás aquí? <br />
+							No sé, pero sé, en cambio, que aunque nadie viniera, <br />
+							Aunque nadie te amara ni te lo agradeciera, <br />
+							Aquí estarías siempre esperándome a mí. <br />
+							¿Por qué no vendré más? ¡Qué ciego estoy, qué ciego! <br />
+							Si sé por experiencia que cuando a Ti me llego <br />
+							Siempre vuelvo cambiado, siempre salgo mejor. <br />
+							¿Adónde voy, Dios mío, cuando a mi Dios no vengo? <br />
+							¡Si Tú me esperas siempre! Si a Ti siempre te tengo, <br />
+							Si jamás me has cerrado las puertas de tu Amor.<br />
+							¿Por qué no vendré mas si sé que aquí, a tu lado, <br />
+							Puedo encontrar, Dios mío, lo que tanto he buscado <br />
+							Mi luz, mi fortaleza, mi paz, mi único bien? <br />
+							Si jamás he sufrido, si jamás he llorado, <br />
+							Señor, sin que conmigo llorases Tú también!<br />
+							¿Por qué no vendré más, Jesús? <br />
+							¡Si Tú lo estás deseando, si yo lo necesito! <br />
+							Si sé que no soy nada cuando no vengo aquí. <br />
+							Si aquí me enseñarás la ciencia de los santos <br />
+							Como aquí la buscaron y la aprendieron tantos, <br />
+							Que fueron tus amigos y gozan ya de Ti.<br />
+							¿Por qué no vendré más, si sé yo <br />
+							Que Tú eres el modelo único y necesario <br />
+							Que nada se hace duro mirándote a Ti aquí? <br />
+							El Sagrario es la celda donde estás encerrado. <br />
+							¡Qué pobre, qué obediente, qué manso, qué callado, <br />
+							¡Qué solo, qué escondido... nadie se fija en Ti!<br />
+							¿Por qué no vendré más ? ¡Oh, Bondad infinita! <br />
+							Riqueza inestimable que nada necesita, <br />
+							Y que te has humillado a mendigar mi amor. <br />
+							Ábreme ya esa puerta, sea ésa ya mi vida, <br />
+							Olvidado de todos, de todos escondida, <br />
+							¡Qué bien se está contigo, qué bien se está, Señor! <br />
+							Amén.
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-4">
+					<div class='clear d-block d-sm-none'></div>
+					<div class="card">
+						<div class="card-header">
+							<a id="tedeum"></a>Te Deum
+						</div>
+						<div class="card-body">
+							A Ti, oh Dios, te alabamos,<br /> 
+							a Ti, Señor, te reconocemos.<br /> 
+							A Ti, eterno Padre,<br /> 
+							te venera toda la creación.<br /> <br /> 
+
+							Los ángeles todos, los cielos<br /> 
+							y todas las potestades te honran.<br /> 
+							Los querubines y serafines<br /> 
+							te cantan sin cesar:<br /> 
+							Santo, Santo, Santo es el Señor,<br /> 
+							Dios del universo.<br /> <br /> 
+
+							Los cielos y la tierra<br /> 
+							están llenos de la majestad de tu gloria.<br /> 
+							A Ti te ensalza<br /> 
+							el glorioso coro de los apóstoles,<br /> 
+							la multitud admirable de los profetas,<br /> 
+							el blanco ejército de los mártires.<br /><br />  
+
+							A Ti la Iglesia santa,<br /> 
+							extendida por toda la tierra,<br /> 
+							te aclama:<br /> 
+							Padre de inmensa majestad,<br /> 
+							Hijo único y verdadero, digno de adoración,<br /> 
+							Espíritu Santo, Defensor.<br /> <br /> 
+
+							Tú eres el Rey de la gloria, Cristo.<br /> 
+							Tú eres el Hijo único del Padre.<br /> 
+							Tú, para liberar al hombre,<br /> 
+							aceptaste la condición humana<br /> 
+							sin desdeñar el seno de la Virgen.<br /> <br /> 
+
+							Tú, rotas las cadenas de la muerte,<br /> 
+							abriste a los creyentes el Reino de los Cielos.<br /> 
+							Tú sentado a la derecha de Dios
+							en la gloria del Padre.<br /> 
+							Creemos que un día<br /> 
+							has de venir como juez.<br /> 
+
+							Te rogamos, pues,<br /> 
+							que vengas en ayuda de tus siervos,<br /> 
+							a quienes redimiste con tu preciosa sangre.<br /> 
+							Haz que en la Gloria eterna<br /> 
+							nos asociemos a tus santos.<br /> 
+
+							Salva a tu pueblo, Señor,<br /> 
+							y bendice tu heredad.<br /> 
+							Sé su pastor<br /> 
+							y ensálzalo eternamente.<br /> <br /> 
+
+							Día tras día te bendecimos<br /> 
+							y alabamos tu nombre para siempre,<br /> 
+							por eternidad de eternidades.<br /> 
+							Dígnate, Señor, en este día<br /> 
+							guardarnos del pecado.<br /> 
+
+							Ten piedad de nosotros, Señor,<br /> 
+							ten piedad de nosotros.<br /> 
+							Que tu misericordia, Señor,<br /> 
+							venga sobre nosotros,<br /> 
+							como lo esperamos de Tí.<br /> <br /> 
+
+							En Tí, Señor, confié,<br /> 
+							no me veré defraudado para siempre<br /> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="row">
+				<div class="col-xs-12 col-md-6">
 					<div class="card">
 						<div class="card-header">
 							<i class="fas fa-home"></i><a id="contacto"></a>&nbsp;&nbsp;Contacto
@@ -91,254 +292,38 @@
 								<i class="far fa-envelope"></i> <a href="mailto:adoracionperpetua.bilbao@gmail.com">adoracionperpetua.bilbao@gmail.com</a><br />
 								<i class="fas fa-church"></i> Parroquia de Nuestra Señora del Carmen.<br /><a href="https://www.google.com/maps/place/Calle+Sim%C3%B3n+Bol%C3%ADvar,+4,+48010+Bilbao,+Vizcaya/@43.2599642,-2.9432837,17z/data=!3m1!4b1!4m5!3m4!1s0xd4e5029190d7de7:0x5eb073ce9bad633e!8m2!3d43.2599642!4d-2.941095" target='_blank'>Calle Simón Bolívar, 4 CP 48010 Bilbao</a><br />
 							</div>
-						</div
+						</div>
 					</div>
 				</div>
 			</div>
-			</section>
+		</section>
 
-			<section id="section-noticias" class="section" data-loaded="0" style="display:none;">
-				<h4 class="h-title">Noticias</h4>
-				<div class='row'>
-					<div class="col-xs-12 col-md-6">
-						<div class="card">
-							<div class="card-body">
-								<ul id="list-noticias">
-								  {% set fst = false %}
-								  {% for nota in noticias %}
-								  <li>{{ nota.getFechaalta()|date("d-m-Y") }} - <a href="javascript:getNoticia('{{ path('app_web_getnoticia') }}',{{ nota.getId() }}) " class="list-noticia">{{ nota.getTitulo() }}</a></li>
-								  {% endfor %}
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-6">
-						<div class="card">
-							<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia float-right' style='display: none;'></div>
-							<div class="card-body" id='noticia'></div>
+		<section id="section-noticias" class="section" data-loaded="0" style="display:none;">
+			<h4 class="h-title">Noticias</h4>
+			<div class='row'>
+				<div class="col-xs-12 col-md-6">
+					<div class="card">
+						<div class="card-body">
+							<ul id="list-noticias">
+								{% set fst = false %}
+								{% for nota in noticias %}
+								<li>{{ nota.getFechaalta()|date("d-m-Y") }} - <a href="javascript:getNoticia('{{ path('app_web_getnoticia') }}',{{ nota.getId() }}) " class="list-noticia">{{ nota.getTitulo() }}</a></li>
+								{% endfor %}
+							</ul>
 						</div>
 					</div>
 				</div>
-			</section>
-			
-			<section id="section-gracias" class="section" data-loaded="0" style="display:none;">
-				<h4 class="h-title">Intenciones personales y acciones de gracias</h4>
-				<div class="row">
-					<div class="col-xs-12 col-md-6">
-						<div class="card">
-						  <div class="card-header">
-						    <div class='row'>
-							  	<div class='col-sm-10'><i class="fas fa-pray"></i> Intenciones&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-2 float-right'></div><div class='col-sm-2 text-right'>
-						    <button class='btn btn btn-light btn-sm' onclick='AbrirModal(2)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button>
-						  		</div>
-						  	</div>
-						  </div>
-						  <div class="card-body">
-							<ul id="lista-nota-2"></ul>
-						  </div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-6">
-						<div class="card">
-							  <div class="card-header">
-							  	<div class='row'>
-							  		<div class='col-sm-10'>
-							    <i class="fas fa-praying-hands"></i> Acción de gracias
-							    	&nbsp;&nbsp;<img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-nota-3 float-right'>
-							    </div>
-							    	<div class='col-sm-2 text-right'><button class='btn btn btn-light btn-sm' onclick='AbrirModal(3)' data-toggle="modal"><i class="fas fa-edit" aria-hidden="true"></i></button></div></div>
-							  </div>
-							  <div class="card-body">
-									<ul id="lista-nota-3"></ul>
-							  </div>
-						</div>
+				<div class="col-xs-12 col-md-6">
+					<div class="card">
+						<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia float-right' style='display: none;'></div>
+						<div class="card-body" id='noticia'></div>
 					</div>
 				</div>
-				<div class='clear'></div>
-				<div class='row'>
-					<div class='col-12'>
-						<div class='alert alert-info text-center' role='alert'>Escribe tu propia petición o acción de gracias pinchando en <i class="fas fa-edit"></i>. No se guarda nigún dato personal, ni se usa caché.</div>
-
-					</div>
-				</div>
-			</section>
-			<section id="section-oracion" class="section" data-loaded="0" style="display:none;">
-				<h4 class="h-title">Oraciones</h4>
-				<div class="row d-md-none">
-					<div class="col-xs-12 pull-center">
-						<a id="rezar-menu"></a>&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-outline-success btn-sm" href="#adorote">Adoro te</a>
-						<a class="btn btn-outline-success btn-sm" href="#tedeum">Te Deum</a>
-						<a class="btn btn-outline-success btn-sm" href="#quebien">Qué bien contigo</a>
-				</div></div>
-				<div class='row'>
-					<div class="col-xs-12 col-md-4">
-						<div class="card">
-							<div class="card-header">
-								<a id="adorote"></a>Adoro te devote
-							</div>
-							<div class="card-body">
-								Te adoro con devoción, Dios escondido,<br /> 
-								oculto verdaderamente bajo estas apariencias. <br /> 
-								A Ti se somete mi corazón por completo,<br /> 
-								y se rinde totalmente al contemplarte.<br />  <br /> 
-								Al juzgar de Ti, se equivocan la vista, el tacto, el gusto;<br />  
-								pero basta el oído para creer con firmeza; <br /> 
-								creo todo lo que ha dicho el Hijo de Dios:<br /> 
-								nada es más verdadero que esta palabra de verdad.<br /> <br />  
-								En la Cruz se escondía sólo la Divinidad, <br /> 
-								pero aquí se esconde también la Humanidad;<br />  
-								creo y confieso ambas cosas,<br />  
-								y pido lo que pidió aquel ladrón arrepentido.<br />  
-								No veo las llagas como las vio Tomas pero confieso que eres mi <br /> Dios: haz que yo crea más y más en Ti, que en Ti esperé y que te ame. <br /> <br /> 
-								¡Oh memorial de la muerte del Señor! <br /> 
-								Pan vivo que das vida al hombre:<br />  
-								concede a mi alma que de Ti viva y que siempre saboree tu dulzura. <br /> Señor Jesús, bondadoso Pelícano, límpiame a mí,inmundo, con tu Sangre, de la que una sola gota puede liberar de todos los crímenes al mundo entero. <br /> <br /> 
-								Jesús, a quien ahora veo oculto, <br /> 
-								te ruego que se cumpla lo que tanto ansío: <br /> 
-								que al mirar tu rostro cara a cara, sea yo feliz viendo tu gloria.<br /> 
-								 Amén.
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-4">
-						<div class='clear d-block d-sm-none'></div>
-						<div class="card">
-							<div class="card-header">
-								<a id="tedeum"></a>Te Deum
-								<a href="#rezar-menu" class='btn btn-default btn-sm float-right'><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-							</div>
-							<div class="card-body">
-								A Ti, oh Dios, te alabamos,<br /> 
-								a Ti, Señor, te reconocemos.<br /> 
-								A Ti, eterno Padre,<br /> 
-								te venera toda la creación.<br /> <br /> 
-
-								Los ángeles todos, los cielos<br /> 
-								y todas las potestades te honran.<br /> 
-								Los querubines y serafines<br /> 
-								te cantan sin cesar:<br /> 
-								Santo, Santo, Santo es el Señor,<br /> 
-								Dios del universo.<br /> <br /> 
-
-								Los cielos y la tierra<br /> 
-								están llenos de la majestad de tu gloria.<br /> 
-								A Ti te ensalza<br /> 
-								el glorioso coro de los apóstoles,<br /> 
-								la multitud admirable de los profetas,<br /> 
-								el blanco ejército de los mártires.<br /><br />  
-
-								A Ti la Iglesia santa,<br /> 
-								extendida por toda la tierra,<br /> 
-								te aclama:<br /> 
-								Padre de inmensa majestad,<br /> 
-								Hijo único y verdadero, digno de adoración,<br /> 
-								Espíritu Santo, Defensor.<br /> <br /> 
-
-								Tú eres el Rey de la gloria, Cristo.<br /> 
-								Tú eres el Hijo único del Padre.<br /> 
-								Tú, para liberar al hombre,<br /> 
-								aceptaste la condición humana<br /> 
-								sin desdeñar el seno de la Virgen.<br /> <br /> 
-
-								Tú, rotas las cadenas de la muerte,<br /> 
-								abriste a los creyentes el Reino de los Cielos.<br /> 
-								Tú sentado a la derecha de Dios
-								en la gloria del Padre.<br /> 
-								Creemos que un día<br /> 
-								has de venir como juez.<br /> 
-
-								Te rogamos, pues,<br /> 
-								que vengas en ayuda de tus siervos,<br /> 
-								a quienes redimiste con tu preciosa sangre.<br /> 
-								Haz que en la Gloria eterna<br /> 
-								nos asociemos a tus santos.<br /> 
-
-								Salva a tu pueblo, Señor,<br /> 
-								y bendice tu heredad.<br /> 
-								Sé su pastor<br /> 
-								y ensálzalo eternamente.<br /> <br /> 
-
-								Día tras día te bendecimos<br /> 
-								y alabamos tu nombre para siempre,<br /> 
-								por eternidad de eternidades.<br /> 
-								Dígnate, Señor, en este día<br /> 
-								guardarnos del pecado.<br /> 
-
-								Ten piedad de nosotros, Señor,<br /> 
-								ten piedad de nosotros.<br /> 
-								Que tu misericordia, Señor,<br /> 
-								venga sobre nosotros,<br /> 
-								como lo esperamos de Tí.<br /> <br /> 
-
-								En Tí, Señor, confié,<br /> 
-								no me veré defraudado para siempre<br /> 
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-4">
-						<div class='clear d-block d-sm-none'></div>
-						<div class="card">
-							<div class="card-header">
-								<a id="quebien"></a>Qué bien se está contigo, Señor
-								<a href="#rezar-menu" class='btn btn-default btn-sm float-right'><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-							</div>
-							<div class="card-body">
-								¡Qué bien se está contigo, Señor, junto al Sagrario! <br />
-								¡Qué bien se está contigo! ¿Por qué no vendré más? <br />
-								Hace ya muchos años que vengo aquí a diario <br />
-								Y aquí te encuentro siempre, Amor Solitario, <br />
-								Solo, pobre, escondido, pensando en mí quizás. <br />
-								Tú no me dices nada ni yo te digo nada; <br />
-								Si Tú lo sabes todo, ¿qué voy a decirte? <br />
-								Sabes todas mis penas, todas mis alegrías, <br />
-								Sabes que vengo a verte con las manos vacías <br />
-								Y que no tengo nada que te pueda servir. <br />
-								Siempre que vengo a verte, siempre te encuentro solo. <br />
-								¿Será, Señor, que nadie sabe que estás aquí? <br />
-								No sé, pero sé, en cambio, que aunque nadie viniera, <br />
-								Aunque nadie te amara ni te lo agradeciera, <br />
-								Aquí estarías siempre esperándome a mí. <br />
-								¿Por qué no vendré más? ¡Qué ciego estoy, qué ciego! <br />
-								Si sé por experiencia que cuando a Ti me llego <br />
-								Siempre vuelvo cambiado, siempre salgo mejor. <br />
-								¿Adónde voy, Dios mío, cuando a mi Dios no vengo? <br />
-								¡Si Tú me esperas siempre! Si a Ti siempre te tengo, <br />
-								Si jamás me has cerrado las puertas de tu Amor.<br />
-								¿Por qué no vendré mas si sé que aquí, a tu lado, <br />
-								Puedo encontrar, Dios mío, lo que tanto he buscado <br />
-								Mi luz, mi fortaleza, mi paz, mi único bien? <br />
-								Si jamás he sufrido, si jamás he llorado, <br />
-								Señor, sin que conmigo llorases Tú también!<br />
-								¿Por qué no vendré más, Jesús? <br />
-								¡Si Tú lo estás deseando, si yo lo necesito! <br />
-								Si sé que no soy nada cuando no vengo aquí. <br />
-								Si aquí me enseñarás la ciencia de los santos <br />
-								Como aquí la buscaron y la aprendieron tantos, <br />
-								Que fueron tus amigos y gozan ya de Ti.<br />
-								¿Por qué no vendré más, si sé yo <br />
-								Que Tú eres el modelo único y necesario <br />
-								Que nada se hace duro mirándote a Ti aquí? <br />
-								El Sagrario es la celda donde estás encerrado. <br />
-								¡Qué pobre, qué obediente, qué manso, qué callado, <br />
-								¡Qué solo, qué escondido... nadie se fija en Ti!<br />
-								¿Por qué no vendré más ? ¡Oh, Bondad infinita! <br />
-								Riqueza inestimable que nada necesita, <br />
-								Y que te has humillado a mendigar mi amor. <br />
-								Ábreme ya esa puerta, sea ésa ya mi vida, <br />
-								Olvidado de todos, de todos escondida, <br />
-								¡Qué bien se está contigo, qué bien se está, Señor! <br />
-								Amén.
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-	<div class='clear'></div>		
+			</div>
+		</section>
 	</div>
-	{% include 'web/footer.html.twig' %}
-
-<!--- Modal --->
+{% include 'web/footer.html.twig' %}
+<!-- Modal -->
 <div class="modal" tabindex="-1" role="dialog" id='modal-nota'>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
