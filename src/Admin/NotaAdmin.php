@@ -69,6 +69,7 @@ abstract class NotaAdmin extends AbstractAdmin
                 'dp_calendar_weeks'     => false,
                 'dp_view_mode'          => 'days',
                 'dp_min_view_mode'      => 'days',
+                'format' => 'dd-MM-yyyy',
             ])
             ->add('tipo', HiddenType::class, ['data' => $this->getTipo()])
             ->add('texto')
