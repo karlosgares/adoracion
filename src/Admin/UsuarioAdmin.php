@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use App\Form\Type\CalendarType;
 use Sonata\AdminBundle\Route\RouteCollection;
@@ -59,12 +60,16 @@ class UsuarioAdmin extends AbstractAdmin
                 ->add('poblacion', TextType::class, ['required'=>false, 'label'=> 'Población'])
                 ->add('sustitucionfranja', ChoiceType::class, ['label'=> 'Franja horaria de sustituto', 'required'=>false, 'choices'=>array_flip(Adorador::getSustitucionfranjas()), 'placeholder'=> 'Elegir para sustitutos'])
                  ->add('tipo', ChoiceType::class, ['label'=> 'Tipo', 'required'=>true, 'choices'=>array_flip(Adorador::getTipos())])
-                 ->add('observaciones')
+                 ->add('observaciones', TextareaType::class, ['required'=>false])
                 
                 //->add('baja')
 
             ;
 
+        }
+        else {
+            $formMapper
+                ->add('activo');
         }        
 
         $formMapper->end()->end()
@@ -89,8 +94,7 @@ class UsuarioAdmin extends AbstractAdmin
             $datagridMapper->add('diasemanahoras.dayofweek',null,['label'=> 'Día de la semana'], ChoiceType::class, ['choices'=>array_flip(Adorador::getDayofweek())])
                 ->add('diasemanahoras.hhmm',null,['label'=> 'Hora'], ChoiceType::class, ['choices'=>$horas])
                 ->add('sustitucionfranja',null,['label'=> 'Franja horaria de sustituto'], ChoiceType::class, ['choices'=>array_flip(Adorador::getSustitucionfranjas())])
-                ->add('tipo',null,['label'=> 'Tipo'], ChoiceType::class, ['choices'=>array_flip(Adorador::getTipos())])
-                ->add('baja')
+                 ->add('tipo',null,['label'=> 'Tipo'], ChoiceType::class, ['choices'=>array_flip(Adorador::getTipos())])
 
             ;
         }

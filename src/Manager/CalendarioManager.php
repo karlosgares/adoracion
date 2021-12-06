@@ -24,26 +24,25 @@ abstract class CalendarioManager {
             $start->add( new \DateInterval('P1D'));
             $bSeguir = (!array_key_exists($start->format("w"), $arrW));
         }
+
+
         $arrDay = [];
-        $arrUser = [];
         foreach ($entities as $entity) {
-            if ($entity->getBaja()) {
-                continue;
-            }
             foreach ($entity->getDiasemanahoras() as $dia) {
                 $start = clone $arrW[$dia->getHora()->format("w")];
-                if ($id == 0) { 
-                    $idx = $start->format('Y-m-d') . $dia->getHora()->format('H');
+                if ($id == 0) {
+                    
+                    if ($entity->getBaja()) continue;
+                       
+                    $idx = $start->format('Y-m-d') . $dia->getHora()->format('H:i');
+                    
 
-                    if (!array_key_exists($idx, $arrDay)) {
-                        $arrDay[$idx] = 1;
-                        $arrUser[$idx] = [$entity->__toString()];
-                    } else {
-                        $arrDay[$idx]++;
-                        $arrUser[$idx][] = $entity->__toString();
-                    }
+                    if (!array_key_exists($idx, $arrDay))
+                            $arrDay[$idx] = 1;
+                    else    $arrDay[$idx]++;
                     
                     $title = ($bWeb)?'':$arrDay[$idx];
+                   
                     $color = ($arrDay[$idx] > 1)?Adorador::color1:Adorador::color0;
                 }
                 else {
@@ -54,31 +53,22 @@ abstract class CalendarioManager {
                 $data = ['id'=> $dia->getId(), 'start'=> sprintf('%sT%s', $start->format('Y-m-d'),$dia->getHora()->format('H:i:s')), 'title' => $title, 'allDay' =>false, 'backgroundColor' => $color];
                     
                 if (!is_null($dia->getFin())) {
-                    if (intval($dia->getFin()->format('H')) > 0) {
-                        $data['end'] = sprintf('%sT%s', $start->format('Y-m-d'), $dia->getFin()->format('H:i:s'));
-                    }
+                    if (intval($dia->getFin()->format('H')) > 0)
+                        $data['end'] = sprintf('%sT%s', $start->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
                     else  {
                         $f = clone $start;
                         $f->add(new \DateInterval('P1D'));
                         $data['end'] = sprintf('%sT%s', $f->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
                     }
                 }
-                if (array_key_exists($idx, $arrDay)) {
+                if (array_key_exists($idx, $arrDay))
                     $data["count"] = $arrDay[$idx];
-                    if ($bWeb) {
-                        $data["users"] = implode(";", $arrUser[$idx]);
-                    }
-                }
                 else {
                     $data["count"] = 0;
-                    if ($bWeb) {
-                        $data["users"] = "";
-                    }
                 }
                 $ret[$idx] = $data;
             }
         }
-        ksort($ret);
         return $ret;
     }
 

@@ -300,7 +300,7 @@ class Adorador
      * @ORM\PrePersist
      */
     public function onPrePersist()
-    {
+    { 
         $this->baja = ($this->tipo > 0);
     }
 

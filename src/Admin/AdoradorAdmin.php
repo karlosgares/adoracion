@@ -16,6 +16,7 @@ class AdoradorAdmin extends UsuarioAdmin
                     ->add('email', EmailType::class)
                     ->add('telefono', TextType::class, ['label'=> 'Teléfono'])
                     ->add('movil', TextType::class, ['label'=> 'Móvil'])
+                    ->add('baja')
                     ->add('_action', null, [
                         'actions' => [
                             'show' => [],
