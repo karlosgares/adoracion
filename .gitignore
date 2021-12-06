@@ -5,6 +5,7 @@
 /public/bundles/
 /var/
 /vendor/
+/.history/*
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -19,3 +20,7 @@
 .idea/
 
 .vscode/settings.json
+
+.vscode/
+
+templates/web/index.html copy.twig
