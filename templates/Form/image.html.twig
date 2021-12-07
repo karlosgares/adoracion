@@ -1,5 +1,5 @@
 {% block image_widget %}
-	{% if value != '' %}
+	{% if value is not iterable and value != '' %}
    <img src="/noticias/{{ value }}" class="img-fluid" alt="">
    {% endif %}
 {% endblock %}

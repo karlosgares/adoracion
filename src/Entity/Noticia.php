@@ -26,7 +26,7 @@ class Noticia
      * @ORM\Column(type="date", nullable=true)
      */
     private $fechabaja;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -151,7 +151,7 @@ class Noticia
 
     public function upload(UploadedFile $file)
     {
-        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
         try {
             $file->move($this->getTargetDirectory(), $fileName);
@@ -164,15 +164,17 @@ class Noticia
         return $fileName;
     }
 
-    public function getTargetDirectory() {
-        $path = $_SERVER['DOCUMENT_ROOT'] . '\noticias';
+    public function getTargetDirectory()
+    {
+        $path = $_SERVER['DOCUMENT_ROOT'] . '/noticias';
         if (!is_dir($path))
             mkdir($path);
         return $path;
     }
 
 
-    public static function getPosiciones() {
+    public static function getPosiciones()
+    {
         $ret[0] = "Derecha del contenido";
         $ret[1] = "Izquierda del contenido";
         $ret[2] = "Encima del contenido";
@@ -192,7 +194,8 @@ class Noticia
         return $this;
     }
 
-    public function getFullfoto() {
+    public function getFullfoto()
+    {
         return $this->getTargetDirectory() . "/" . $this->getFoto();
     }
 
@@ -201,16 +204,15 @@ class Noticia
      * @return string
      * @throws \Exception
      */
-    public function getHace():string {
+    public function getHace(): string
+    {
         $now = new \DateTime('NOW');
         $diff = $this->getFechaalta()->diff($now)->format('%a');
-        if ( (int) $diff == 0) {
+        if ((int) $diff == 0) {
             $ret = "hoy";
-        }
-        else if ( (int) $diff == 1) {
+        } else if ((int) $diff == 1) {
             $ret = sprintf("%s día", $diff);
-        }
-        else {
+        } else {
             $ret = sprintf("%s días", $diff);
         }
         return $ret;
@@ -221,11 +223,12 @@ class Noticia
      * @return bool
      * @throws \Exception
      */
-    public function inWeb():bool {
+    public function inWeb(): bool
+    {
         $now = new \DateTime('NOW');
-        $bFechaAlta = ( null !== $this->getFechaalta() || $now >=  $this->getFechaalta());
-        $bFechaBaja = ( null !==  $this->getFechabaja() || $now <=  $this->getFechabaja());
+        $bFechaAlta = (null !== $this->getFechaalta() || $now >=  $this->getFechaalta());
+        $bFechaBaja = (null !==  $this->getFechabaja() || $now <=  $this->getFechabaja());
 
-        return ( $this->getActivo() && $bFechaAlta && $bFechaBaja);
+        return ($this->getActivo() && $bFechaAlta && $bFechaBaja);
     }
 }

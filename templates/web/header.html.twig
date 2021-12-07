@@ -8,6 +8,7 @@
 
 {% set headerCss = 'bundles/app/css/header' ~ version ~ '.css' %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAXFpXAAAAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAP/gAAD/4AAA/+AAAA4AAAAOAAAADgAAAA4AAAAAAAAD4PwAA+D8AAPg/AAD4PwAA+D8AAPg/AAD4PwAAgAMAAIADAACAAwAAgAMAAIADAAD4PwAA+D8AAPg/AAD4PwAA" rel="icon" type="image/x-icon" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('bundles/app/css/fullcalendar.min.css') }}">
 <link rel="stylesheet" href="{{ asset('bundles/app/css/web.css') }}">
@@ -51,16 +52,42 @@
 		</div>
 		   {% block nav %}
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    			<span class="navbar-toggler-icon"></span>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    				<span class="navbar-toggler-icon"></span>
   				</button>
-  				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+  				<div class="collapse navbar-collapse" id="navbarNavDropdown">
 	  				<ul class="navbar-nav mr-auto sf-menu">
-						<li  class="current"><a href='javascript:void(0)' onClick="javascript:goto(this,'home');">Inicio</a></li>
-						<li><a href='javascript:void(0)' onClick="javascript:goto(this,'noticias');">Noticias</a></li>
-						<li><a href='javascript:void(0)' onClick="javascript:goto(this,'gracias');">Intenciones y acción gracias</a></li>
-						<li><a href='javascript:void(0)' onClick="javascript:goto(this,'oracion');">Rezar</a></li>
-						<li><a href="#contacto" onclick="javascript:goto(this,'home');">Contacto</a></li>
+						<li class="nav-item current"><a class="nav-link" href='javascript:void(0)' onClick="javascript:goto(this,'home');">Inicio</a></li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Noticias							
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+								<a class="dropdown-item" href="#noticiasdestacadas"  href='javascript:void(0)' onClick="javascript:goto(this,'home');">Noticias destacadas</a>
+								<a class="dropdown-item" href="javascript:void(0);" onClick="javascript:goto(this,'noticias');">Todas las noticias</a>
+							</div>
+      					</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Intenciones y acciones de gracia
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+								<a class="dropdown-item" href="#obispo" onClick="javascript:goto(this,'home');">Intenciones del Obispo</a>
+								<a class="dropdown-item" href="#intenciones" onClick="javascript:goto(this,'home');">Intenciones</a>
+								<a class="dropdown-item" href="#acciongracias" onClick="javascript:goto(this,'home');">Acciones de gracias</a>
+							</div>
+      					</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Rezar
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+								<a class="dropdown-item" href="#adorote" onClick="javascript:goto(this,'home');">Adorote devote</a>
+								<a class="dropdown-item" href="#quebien" onClick="javascript:goto(this,'home');">Qué bien se está contigo, Señor!</a>
+								<a class="dropdown-item" href="#tedeum" onClick="javascript:goto(this,'home');">Te deum</a>
+							</div>
+      					</li>
+						<li class="nav-item"><a class="nav-link" href="#contacto" onclick="javascript:goto(this,'home');">Contacto</a></li>
 					</ul>
 				</div>
 				<div class="d-md-none title-sm">ADORACIÓN EUCARÍSTICA PERPETUA BILBAO</div>

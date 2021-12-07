@@ -44,6 +44,11 @@ class Sacerdote
      */
     private $diasemanahoras;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activo;
+
     public function __toString() {
         return $this->getNombre() . " " . $this->getApellidos(); 
     }
@@ -134,4 +139,16 @@ class Sacerdote
     }
 
     public function getColor() { return self::color; }
+
+    public function getActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo): self
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
 }

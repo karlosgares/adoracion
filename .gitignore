@@ -2,9 +2,11 @@
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.*.local
-/public/bundles/
+/public/bundles/sonataadmin
+/public/bundles/sonatacore
 /var/
 /vendor/
+/.history/*
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -17,3 +19,9 @@
 ###< symfony/web-server-bundle ###
 
 .idea/
+
+.vscode/settings.json
+
+.vscode/
+
+templates/web/index.html copy.twig

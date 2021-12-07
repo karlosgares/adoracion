@@ -1,0 +1,134 @@
+<?php
+namespace App\Manager;
+
+use App\Entity\Sacerdote;
+use App\Entity\Adorador;
+
+
+abstract class CalendarioManager {
+
+	public static function getAdoradoresDias($em, $post, $bWeb = false) {
+        $ret = [];
+        $id = $post['id'];
+        $className = ucfirst($post['tipo']);
+        $start = new \DateTime($post['start']);
+        $end = new \DateTime($post['end']);
+        if ($id > 0)
+             $entities = $em->getRepository("App\\Entity\\" . $className)->findById($id);
+        else $entities = $em->getRepository("App\\Entity\\" . $className)->findAll();
+        
+        $bSeguir = true;
+        $arrW = []; /// fecha del calendario por día de la semana
+        while($bSeguir) {
+            $arrW[$start->format("w")] = clone $start;
+            $start->add( new \DateInterval('P1D'));
+            $bSeguir = (!array_key_exists($start->format("w"), $arrW));
+        }
+        $arrDay = [];
+        $arrUser = [];
+        foreach ($entities as $entity) {
+            if ($entity->getBaja()) {
+                continue;
+            }
+            foreach ($entity->getDiasemanahoras() as $dia) {
+                $start = clone $arrW[$dia->getHora()->format("w")];
+                if ($id == 0) { 
+                    $idx = $start->format('Y-m-d') . $dia->getHora()->format('H');
+
+                    if (!array_key_exists($idx, $arrDay)) {
+                        $arrDay[$idx] = 1;
+                        $arrUser[$idx] = [$entity->__toString()];
+                    } else {
+                        $arrDay[$idx]++;
+                        $arrUser[$idx][] = $entity->__toString();
+                    }
+                    
+                    $title = ($bWeb)?'':$arrDay[$idx];
+                    $color = ($arrDay[$idx] > 1)?Adorador::color1:Adorador::color0;
+                }
+                else {
+                    $title = '';
+                    $idx = count($ret);
+                    $color = $entity->getColor();
+                }
+                $data = ['id'=> $dia->getId(), 'start'=> sprintf('%sT%s', $start->format('Y-m-d'),$dia->getHora()->format('H:i:s')), 'title' => $title, 'allDay' =>false, 'backgroundColor' => $color];
+                    
+                if (!is_null($dia->getFin())) {
+                    if (intval($dia->getFin()->format('H')) > 0) {
+                        $data['end'] = sprintf('%sT%s', $start->format('Y-m-d'), $dia->getFin()->format('H:i:s'));
+                    }
+                    else  {
+                        $f = clone $start;
+                        $f->add(new \DateInterval('P1D'));
+                        $data['end'] = sprintf('%sT%s', $f->format('Y-m-d'),$dia->getFin()->format('H:i:s'));
+                    }
+                }
+                if (array_key_exists($idx, $arrDay)) {
+                    $data["count"] = $arrDay[$idx];
+                    if ($bWeb) {
+                        $data["users"] = implode(";", $arrUser[$idx]);
+                    }
+                }
+                else {
+                    $data["count"] = 0;
+                    if ($bWeb) {
+                        $data["users"] = "";
+                    }
+                }
+                $ret[$idx] = $data;
+            }
+        }
+        ksort($ret);
+        return $ret;
+    }
+
+    public static function getSacerdotesDias($em, $post, $bPrint = false) {
+        $ret = [];
+        $id = $post['id'];
+        $className = ucfirst($post['tipo']);
+        $start = new \DateTime($post['start']);
+        $end = new \DateTime($post['end']);
+
+        $qb =  $em->createQueryBuilder('d')
+            ->select('d.id, d.hora, d.fin')
+            ->addSelect('s.nombre')
+            ->from('App:DiasemanaHora', 'd')
+            ->innerJoin('d.sacerdotes', 's')
+            ->where('d.hora >= :start')
+            ->andWhere('d.tipo = :tipo')
+            ->andWhere('d.fin < :end')
+            ->setParameter('start', $start->format('Y-m-d 00:00:00'))
+            ->setParameter('end', $end->format('Y-m-d 00:00:00'))
+            ->setParameter('tipo', 0)
+        ;
+
+        if ($id > 0) {
+            $qb->andWhere('s.id = :idsacerdote')->setParameter('idsacerdote', $id);
+        }
+        else {
+             $qb->andWhere('s.activo = 1');
+        }
+        
+        $qb->orderBy('d.hora');
+        $rst = $qb->getQuery()->getResult();
+        foreach ($rst as $dia) {
+            $hora = $dia['hora'];
+            $fin= $dia['fin'];
+            if($bPrint) $idx = $hora->format('w') * 100 +  $hora->format('H');
+            else  $idx = $hora->format('Y-m-dH:i');
+            $color = Sacerdote::color;
+            $title = $dia['nombre'];
+            $iddia = $dia['id'];
+            $data = ['id'=> $iddia, 'start'=>sprintf('%sT%s', $hora->format('Y-m-d'),$hora->format('H:i:s')), 'title' => $title, 'allDay' =>false, 'backgroundColor' => $color];
+                    
+            if (!is_null($fin)) {
+                $data['end'] = sprintf('%sT%s', $hora->format('Y-m-d'),$fin->format('H:i:s'));
+            }
+            $ret[$idx] = $data;
+        }
+        return $ret;
+    }
+
+}
+
+?>

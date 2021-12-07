@@ -1,0 +1,16 @@
+@media print {
+nav {display:none;}
+.section-obispo table { font-family: Helvetica, Verdana; font-size: 28px!important; font-weight: 600; }
+}
+
+.section-nota table { font-family: Helvetica, Verdana; font-size: 14px!important; font-weight: 550;}
+.section-obispo li { text-align: left; font-family: Helvetica; font-size: 16px!important; font-weight: 550; }
+
+.section-obispo { width: 800px}
+
+button { margin: 5px; }
+
+.title-obispo {color:red; text-decoration: underline;}
+.fila-2 td { background-color: #DDD; font-weight: 600;}
+
+.section-sacerdote td { padding: 6px; }
