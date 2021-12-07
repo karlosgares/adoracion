@@ -37,7 +37,7 @@
 						 <img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-calendar-sacerdote float-right'>
 					  	</div>
 					  	<div class="card-body">
-					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 500, 'headerRight': 'prev,next' } %}
+					    {% set vars = {'calendar': 'calendar-sacerdote', 'tipo': 'sacerdote', 'url': path('web_load_calendar'),'minTime': '06:00:00','maxTime': '23:00:00', 'calendarHeight': 500, 'headerRight': '' } %}
 						{% include 'web/calendar.html.twig' with vars %}
 					  	</div>
 					</div>
@@ -306,10 +306,13 @@
 				<div class="col-xs-12 col-md-6">
 					<div class="card">
 						<div class="card-body">
-							<ul id="list-noticias">
-								{% set fst = false %}
+							<ul class="list-group" id="list-noticias">
+								{% set fst = 0 %}
 								{% for nota in noticias %}
-								<li>{{ nota.getFechaalta()|date("d-m-Y") }} - <a href="javascript:getNoticia('{{ path('app_web_getnoticia') }}',{{ nota.getId() }}) " class="list-noticia">{{ nota.getTitulo() }}</a></li>
+								<li id="noticia_{{ nota.getId() }}" class="list-group-item">{{ nota.getFechaalta()|date("d-m-Y") }} - <a href="javascript:getNoticia('{{ path('app_web_getnoticia') }}',{{ nota.getId() }})" class="list-noticia">{{ nota.getTitulo() }}</a></li>
+								{% if fst == 0 %}
+								{% set fst = nota.getId() %}
+								{% endif %}
 								{% endfor %}
 							</ul>
 						</div>
@@ -318,7 +321,7 @@
 				<div class="col-xs-12 col-md-6">
 					<div class="card">
 						<div class="card-header"><img src='{{ asset('bundles/app/img/ajax-loader.gif') }}' class='ajax-loader-noticia float-right' style='display: none;'></div>
-						<div class="card-body" id='noticia'></div>
+						<div class="card-body" id='noticia-detalle'></div>
 					</div>
 				</div>
 			</div>
@@ -358,14 +361,13 @@ $(function() {
 		  method: 'GET'
 		}).done(function(res) { 
 		 	for(index in res) {
-		 		console.info($('.ajax-loader-nota-' + index));
 		 		$('#lista-nota-' + index).html(res[index])
 		 		$('.ajax-loader-nota-' + index).hide();
 		 	}
 		}
 	);
 
-	getNoticia('{{ path('app_web_getnoticia') }}',0);
+	getNoticia('{{ path('app_web_getnoticia') }}', {{ fst }});
 });
 </script>
 {% endblock %}
