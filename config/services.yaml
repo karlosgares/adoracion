@@ -100,3 +100,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Frase }
         public: true
+
+    admin.adoradores_dia_hora:
+        class: App\Admin\AdoradoresDiaHoraAdmin
+        arguments: [~, App\Entity\AdoradoresDiaHora, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AdoradoresDiaHora }
+        public: true
