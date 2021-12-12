@@ -110,7 +110,7 @@ class WebController extends AbstractController
         $post['id'] = 0;
         switch ($post['tipo']) {
             case 'adorador':
-                $ret = CalendarioManager::getAdoradoresDias($em, $post, true);
+                $ret = CalendarioManager::getAdoradoresDiasNumero($em);
                 break;
             case 'sacerdote':
                 $ret = CalendarioManager::getSacerdotesDias($em, $post);
