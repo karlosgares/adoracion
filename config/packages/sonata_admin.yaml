@@ -15,6 +15,13 @@ sonata_admin:
                 icon: '<i class="fa fa-circle-o"></i>'
                 item: admin.adorador
 
+            Número de Adoradores:
+                on-top: true
+                label: ~
+                label_catalogue: ~
+                icon: '<i class="fa fa-circle-o"></i>'
+                item: admin.adoradores_dia_hora        
+
             Confesores:
                 on-top: true
                 label: ~

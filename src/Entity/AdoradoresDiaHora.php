@@ -82,4 +82,14 @@ class AdoradoresDiaHora
 
         return $this;
     }
+
+
+    public function getDiaText():string {
+        return self::$diasSemana[$this->dia];
+    }
+
+
+    public function getHoraText():string {
+        return sprintf("%s:%s", ($this->hora < 10)?"0".$this->hora:$this->hora, "00");
+    }
 }
