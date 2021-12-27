@@ -76,7 +76,7 @@ class UsuarioAdmin extends AbstractAdmin
             ->add('apellidos')
             ->add('email')
             ->add('telefono')
-            ->add('activo');
+        ;
 
         if ($this->getBaseRoutePattern() == 'adorador') {
             $horas = [];
@@ -92,24 +92,13 @@ class UsuarioAdmin extends AbstractAdmin
                 ->add('tipo', null, ['label' => 'Tipo'], ChoiceType::class, ['choices' => array_flip(Adorador::getTipos())])
                 ->add('baja');
         }
+        else {
+
+            $datagridMapper->add('activo');
+
+        }
     }
 
-    protected function configureListFields(ListMapper $listMapper)
-    {
-        $listMapper
-            ->add('apellidos', TextType::class)
-            ->add('nombre')
-            ->add('email', EmailType::class)
-            ->add('telefono', TextType::class)
-            ->add('activo')
-            ->add('_action', null, [
-                'actions' => [
-                    'show' => [],
-                    'edit' => [],
-                    'delete' => [],
-                ],
-            ]);
-    }
 
     public function getColor()
     {
