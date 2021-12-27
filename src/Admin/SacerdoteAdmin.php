@@ -2,6 +2,8 @@
 
 namespace App\Admin;
 
+use Sonata\AdminBundle\Datagrid\ListMapper;
+
 class SacerdoteAdmin extends UsuarioAdmin
 {
     protected $baseRouteName = 'sacerdote';
@@ -35,5 +37,22 @@ class SacerdoteAdmin extends UsuarioAdmin
     public function getHeaderRight()
     {
         return 'prev,next';
+    }
+
+    protected function configureListFields(ListMapper $listMapper)
+    {
+        $listMapper
+            ->add('apellidos', TextType::class)
+            ->add('nombre')
+            ->add('email', EmailType::class)
+            ->add('telefono', TextType::class)
+            ->add('activo')
+            ->add('_action', null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ],
+            ]);
     }
 }
